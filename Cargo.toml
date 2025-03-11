@@ -17,7 +17,7 @@ keywords = ["image", "converter", "cli", "front-end", "image-cli"]
 categories = ["multimedia::images", "command-line-utilities"]
 
 edition = "2021"
-rust-version = "1.79"
+rust-version = "1.80"
 
 [package.metadata.release]
 tag-prefix = ""
@@ -56,6 +56,7 @@ yare = "3"
 default = ["imageproc-ops", "nasm"]
 imageproc-ops = ["sic_core/imageproc-ops", "sic_cli_ops/imageproc-ops", "sic_image_engine/imageproc-ops", "sic_parser/imageproc-ops"]
 nasm = ["sic_core/nasm"]
+dav1d = ["sic_core/dav1d"]
 
 output-test-images = []
 

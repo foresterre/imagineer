@@ -8,7 +8,7 @@ repository = "https://github.com/foresterre/sic"
 readme = "../../README.md"
 
 edition = "2021"
-rust-version = "1.61"
+rust-version = "1.80"
 
 [dependencies]
 image = { version = "0.25.5", features = ["rayon"] }
@@ -18,4 +18,5 @@ thiserror = "2"
 
 [features]
 nasm = ["image/nasm"]
+dav1d = ["image/avif-native"]
 imageproc-ops = ["imageproc", "ab_glyph"]

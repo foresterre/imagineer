@@ -10,7 +10,18 @@ on:
 jobs:
   msrv_stable:
     name: msrv_stable
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        build: [ ubuntu, macos, windows ]
+        include:
+          - build: ubuntu
+            os: ubuntu-latest
+          - build: macos
+            os: macos-latest
+          - build: windows
+            os: windows-latest
+    runs-on: ${{ matrix.os }}
     continue-on-error: true
     steps:
       - name: checkout_repo
@@ -28,9 +39,84 @@ jobs:
       - name: install_nasm
         uses: ilammy/setup-nasm@v1
 
+      - name: feature_dav1d_setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: feature_dav1d_pip
+        run: |
+          pip install -U pip
+          pip install -U wheel setuptools
+          pip install -U meson ninja
+
+      - name: feature_dav1d_build_david_ubuntu
+        if: ${{ matrix.build == 'ubuntu' }}
+        env:
+          DAV1D_DIR: libdav1d
+          LIB_PATH: lib/x86_64-linux-gnu
+        run: |
+          git clone --branch 1.5.0 --depth 1 https://code.videolan.org/videolan/dav1d.git
+          cd dav1d
+          meson build -Dprefix=$HOME/$DAV1D_DIR -Denable_tools=false -Denable_examples=false --buildtype release
+          ninja -C build
+          ninja -C build install
+          echo "PKG_CONFIG_PATH=$HOME/$DAV1D_DIR/$LIB_PATH/pkgconfig" >> $GITHUB_ENV
+          echo "LD_LIBRARY_PATH=$HOME/$DAV1D_DIR/$LIB_PATH" >> $GITHUB_ENV
+
+      - name: feature_dav1d_build_david_macos
+        if: ${{ matrix.build == 'macos' }}
+        env:
+          DAV1D_DIR: libdav1d
+          LIB_PATH: lib
+        run: |
+          git clone --branch 1.5.0 --depth 1 https://code.videolan.org/videolan/dav1d.git
+          cd dav1d
+          meson build -Dprefix=$HOME/$DAV1D_DIR -Denable_tools=false -Denable_examples=false --buildtype release
+          ninja -C build
+          ninja -C build install
+          echo "PKG_CONFIG_PATH=$HOME/$DAV1D_DIR/$LIB_PATH/pkgconfig" >> $GITHUB_ENV
+          echo "LD_LIBRARY_PATH=$HOME/$DAV1D_DIR/$LIB_PATH" >> $GITHUB_ENV
+
+      - uses: ilammy/msvc-dev-cmd@v1
+        if: ${{ matrix.build == 'windows' }}
+
+      - name: feature_dav1d_build_david_windows_env
+        if: ${{ matrix.build == 'windows' }}
+        shell: bash
+        run: |
+          echo "PKG_CONFIG=c:\build\bin\pkg-config.exe" >> $GITHUB_ENV
+          echo "PKG_CONFIG_PATH=C:\build\lib\pkgconfig" >> $GITHUB_ENV
+          echo "C:\build\bin" >> $GITHUB_PATH
+
+      - name: feature_dav1d_build_david_windows_pkg_config
+        if: ${{ matrix.build == 'windows' }}
+        run: |
+          git clone --branch meson-glib-subproject --depth 1 https://gitlab.freedesktop.org/tpm/pkg-config.git
+          cd pkg-config
+          meson build -Dprefix=C:\build --buildtype release
+          ninja -C build
+          ninja -C build install
+
+      - name: feature_dav1d_build_david_windows
+        if: ${{ matrix.build == 'windows' }}
+        run: |
+          git clone --branch 1.5.0 --depth 1 https://code.videolan.org/videolan/dav1d.git
+          cd dav1d
+          meson build -Dprefix=C:\build -Denable_tools=false -Denable_examples=false --buildtype release
+          ninja -C build
+          ninja -C build install
+
       - name: run_cargo_msrv_verify
         run: cargo msrv verify --output-format json
 
       - name: run_cargo_msrv_on_verify_failure
         if: ${{ failure() }}
         run: cargo msrv find --output-format json
+
+      - name: run_cargo_msrv_verify
+        run: cargo msrv verify --features dav1d --output-format json
+
+      - name: run_cargo_msrv_on_verify_failure
+        if: ${{ failure() }}
+        run: cargo msrv find --features dav1d --output-format json

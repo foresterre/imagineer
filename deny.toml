@@ -25,3 +25,7 @@ expression = "BSD-3-Clause"
 license-files = [
     { path = "LICENSE.md", hash = 0xf0600744 },
 ]
+
+[[licenses.exceptions]]
+allow = ["MPL-2.0"]
+name = "mp4parse"

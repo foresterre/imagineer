@@ -27,11 +27,11 @@ changes.
 
 ### Notable dependency updates
 
-- Updated [image](https://github.com/image-rs/image) to 0.25.2
+- Updated [image](https://github.com/image-rs/image) to 0.25.5
 
 ### Disabled
 
-- Disabled AVIF decoder for now due to cross-platform compilation issues (dav1d-rs).
+- Disabled AVIF decoder by default due to cross-platform compilation issues (enable on compile time using feature "dav1d"; requires libdav1d to be present).
 
 ## [0.22.4] - 2023-09-17
 
