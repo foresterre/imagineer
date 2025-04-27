@@ -1,7 +1,7 @@
 use crate::errors::SicImageEngineError;
 use crate::operations::ImageOperation;
 use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
-use sic_core::{image, SicImage};
+use sic_core::{SicImage, image};
 
 pub struct FlipVertical;
 

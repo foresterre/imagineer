@@ -1,4 +1,3 @@
-#![cfg(feature = "imageproc-ops")]
 #![deny(clippy::all)]
 
 pub mod common;

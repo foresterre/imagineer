@@ -1,6 +1,6 @@
 use crate::encode_settings;
 use sic_core::image::ImageError;
-use sic_core::{image, SicCoreError};
+use sic_core::{SicCoreError, image};
 use std::path::PathBuf;
 use thiserror::Error;
 
@@ -27,7 +27,9 @@ pub enum SicIoError {
     )]
     NoInputImage,
 
-    #[error("Unable to extract frame {0} from the (animated) image; please use a frame index between 0 and {1}.")]
+    #[error(
+        "Unable to extract frame {0} from the (animated) image; please use a frame index between 0 and {1}."
+    )]
     NoSuchFrame(usize, usize),
 
     #[error("An animated image was expected, but a static image was given")]

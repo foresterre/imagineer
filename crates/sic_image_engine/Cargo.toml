@@ -1,29 +1,26 @@
 [package]
 name = "sic_image_engine"
-version = "0.22.1"
+version = "0.23.0"
 authors = ["Martijn Gribnau <garm@ilumeo.com>"]
-description = "Component of the sic cli: provides abstractions for (the application of) image operations."
+description = "Provides abstractions for the application of image operations of the 'imagineer' image cli project"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/foresterre/sic"
 readme = "../../README.md"
 
-edition = "2021"
-rust-version = "1.61"
+edition = "2024"
+rust-version = "1.86"
 
 [dependencies]
-sic_core = { version = "0.22.0", path = "../sic_core" }
-sic_io = { version = "0.22.0", path = "../sic_io" }
+sic_core = { workspace = true }
+sic_io = { workspace = true }
 
 strum = "0.27.1"
 strum_macros = "0.27.1"
-thiserror = "2"
-
+thiserror = { workspace = true }
 rayon = "1.10.0"
 
 [dev-dependencies]
-sic_testing = { version = "0.22.0", path = "../sic_testing" }
+sic_testing = { workspace = true }
 
 [features]
-imageproc-ops = ["sic_core/imageproc-ops"]
-
 output-test-images = []

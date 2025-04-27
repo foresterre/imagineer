@@ -1,20 +1,19 @@
 [package]
 name = "sic_io"
-version = "0.22.1"
+version = "0.23.0"
 authors = ["Martijn Gribnau <garm@ilumeo.com>"]
-description = "Component of the sic cli: provides accessible i/o around image formats."
+description = "Common i/o operations and image format handling for the 'imagineer' image cli project"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/foresterre/sic"
 readme = "../../README.md"
 
-edition = "2021"
-rust-version = "1.61"
+edition = "2024"
+rust-version = "1.86"
 
 [dependencies]
-sic_core = { version = "0.22.0", path = "../sic_core" }
-
-thiserror = "2"
+sic_core = { workspace = true }
+thiserror = { workspace = true }
 
 [dev-dependencies]
-parameterized = "2.0.0"
-sic_testing = { version = "0.22.0", path = "../sic_testing" }
+parameterized = { workspace = true }
+sic_testing = { workspace = true }

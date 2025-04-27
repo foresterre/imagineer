@@ -1,26 +1,23 @@
 [package]
 name = "sic_parser"
-version = "0.22.1"
+version = "0.23.0"
 authors = ["Martijn Gribnau <garm@ilumeo.com>"]
-description = "Component of the sic cli: parser for the image operation script used by sic."
+description = "Parser for the image operation script used by the 'imagineer' image cli"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/foresterre/sic"
 readme = "../../README.md"
 
-edition = "2021"
-rust-version = "1.61"
+edition = "2024"
+rust-version = "1.86"
 
 [dependencies]
-sic_core = { version = "0.22.0", path = "../sic_core"}
-sic_image_engine = { version = "0.22.0", path = "../sic_image_engine" }
+sic_core = { workspace = true }
+sic_image_engine = { workspace = true }
 
 pest = "2.7.15"
 pest_derive = "2.7.15"
-thiserror = "2"
+thiserror = { workspace = true }
 
 [dev-dependencies]
-sic_testing = { version = "0.22.0", path = "../sic_testing" }
-parameterized = "2.0.0"
-
-[features]
-imageproc-ops = []
+sic_testing = { workspace = true }
+parameterized = { workspace = true }

@@ -1,15 +1,15 @@
 [package]
 name = "sic_testing"
-version = "0.22.0"
+version = "0.23.0"
 authors = ["Martijn Gribnau <garm@ilumeo.com>"]
-description = "Component of the sic cli: provides commonly used testing operations for sic crates."
+description = "Commonly used testing operations for the 'imagineer' image cli project"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/foresterre/sic"
 readme = "../../README.md"
 
-edition = "2021"
-rust-version = "1.61"
+edition = "2024"
+rust-version = "1.86"
 
 [dependencies]
-sic_core = { version = "0.22.0", path = "../sic_core" }
-parameterized  = "2.0.0"
+sic_core = { workspace = true }
+parameterized = { workspace = true }

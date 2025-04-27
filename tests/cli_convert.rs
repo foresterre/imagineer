@@ -9,9 +9,9 @@ use std::path::{Path, PathBuf};
 
 use sic_core::image;
 
-use sic::cli::app::{build_app_config, create_app as get_app}; // build_app_config
-use sic::cli::config::InputOutputMode;
-use sic::cli::pipeline::run_with_devices;
+use imagineer::cli::app::{build_app_config, create_app as get_app}; // build_app_config
+use imagineer::cli::config::InputOutputMode;
+use imagineer::cli::pipeline::run_with_devices;
 
 // copied from sic_lib::processor::mod_test_includes
 // I preferred to not make that module public (2018-11-28)
@@ -85,7 +85,7 @@ mod convert_to_x {
         let output_path = setup_output_path(&["cli_convert_to_x_by_extension", ext].join("."));
 
         let args = vec![
-            "sic",
+            "imagineer",
             "--input",
             input_path.to_str().unwrap(),
             "--output",
@@ -114,7 +114,7 @@ mod convert_to_x_by_ff {
 
     fn args<'a>(which: &'a str, input: &'a Path, output: &'a Path) -> Vec<&'a str> {
         vec![
-            "sic",
+            "imagineer",
             "--output-format",
             which,
             "--input",
@@ -204,7 +204,7 @@ mod pnm_ascii_and_binary {
         ));
 
         let mut args = Vec::with_capacity(8);
-        args.push("sic");
+        args.push("imagineer");
         if is_ascii {
             args.push("--pnm-encoding-ascii");
         }
@@ -268,7 +268,7 @@ fn convert_jpeg_quality_different() {
     let out2 = setup_output_path("out_02_jpeg_2.jpeg");
 
     let args1 = vec![
-        "sic",
+        "imagineer",
         "--output-format",
         which,
         "--input",
@@ -278,7 +278,7 @@ fn convert_jpeg_quality_different() {
     ];
 
     let args2 = vec![
-        "sic",
+        "imagineer",
         "--jpeg-encoding-quality",
         "81",
         "--output-format",

@@ -1,4 +1,4 @@
-//! The primary definition of an animated image, for the `sic` project.
+//! The primary definition of an animated image.
 
 use crate::errors::SicCoreError;
 use image::{DynamicImage, Frames};

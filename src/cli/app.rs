@@ -1,5 +1,5 @@
 use crate::cli::config::{
-    validate_jpeg_quality, Config, ConfigBuilder, InputOutputModeType, SelectedLicenses,
+    Config, ConfigBuilder, InputOutputModeType, SelectedLicenses, validate_jpeg_quality,
 };
 use anyhow::anyhow;
 use arg_names::*;
@@ -53,12 +53,6 @@ define_arg_consts!(arg_names, {
     GROUP_IMAGE_OPERATIONS,
 });
 
-#[cfg(not(feature = "imageproc-ops"))]
-fn wrap_with(app: App<'static, 'static>) -> App<'static, 'static> {
-    app
-}
-
-#[cfg(feature = "imageproc-ops")]
 fn wrap_with(app: App<'static, 'static>) -> App<'static, 'static> {
     app.arg(
         Arg::with_name(OperationId::DrawText.as_str())
@@ -84,10 +78,10 @@ pub fn create_app(
     about: &'static str,
     help_ops: &'static str,
 ) -> App<'static, 'static> {
-    wrap_with(App::new("sic")
+    wrap_with(App::new("imagineer")
         .version(version)
         .about(about)
-        .after_help("For more information, visit: https://github.com/foresterre/sic")
+        .after_help("For more information, visit: https://github.com/foresterre/imagineer")
         .author("Martijn Gribnau <garm@ilumeo.com>")
 
         // settings
@@ -103,7 +97,7 @@ pub fn create_app(
         // organisational:
         .arg(Arg::with_name(ARG_LICENSE)
             .long("license")
-            .help("Displays the license of this piece of software (`sic`).")
+            .help("Displays the license of this piece of software (`imagineer`).")
             .takes_value(false)
             .conflicts_with_all(&[ARG_DEP_LICENSES, ARG_INPUT, ARG_OUTPUT, ARG_INPUT_GLOB, ARG_OUTPUT_GLOB]))
         .arg(Arg::with_name(ARG_DEP_LICENSES)

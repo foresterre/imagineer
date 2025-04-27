@@ -6,7 +6,7 @@ use sic_core::image::imageops::FilterType;
 use crate::errors::SicImageEngineError;
 use crate::operations::ImageOperation;
 use crate::wrapper::filter_type::FilterTypeWrap;
-use crate::{operations, ImgOp};
+use crate::{ImgOp, operations};
 use sic_core::SicImage;
 
 trait EnvironmentKey {
@@ -121,11 +121,10 @@ impl ImageEngine {
                 operations::crop::Crop::new((*lx, *ly), (*rx, *ry)).apply_operation(&mut self.image)
             }
             ImgOp::Diff(path) => operations::diff::Diff::new(path).apply_operation(&mut self.image),
-            #[cfg(feature = "imageproc-ops")]
             ImgOp::DrawText(inner) => {
                 operations::draw_text::DrawText::new(inner).apply_operation(&mut self.image)
             }
-            ImgOp::Filter3x3(ref kernel) => {
+            ImgOp::Filter3x3(kernel) => {
                 operations::filter3x3::Filter3x3::new(kernel).apply_operation(&mut self.image)
             }
             ImgOp::FlipHorizontal => {
@@ -163,7 +162,6 @@ impl ImageEngine {
             ImgOp::Rotate270 => {
                 operations::rotate270::Rotate270::new().apply_operation(&mut self.image)
             }
-            #[cfg(feature = "imageproc-ops")]
             ImgOp::Threshold => {
                 operations::threshold::Threshold::new().apply_operation(&mut self.image)
             }
@@ -316,8 +314,8 @@ mod tests {
     use crate::operations::diff::{DIFF_PX_DIFF, DIFF_PX_NO_OVERLAP, DIFF_PX_SAME};
     use crate::wrapper::gradient_input::GradientInput;
     use crate::wrapper::image_path::ImageFromPath;
-    use sic_core::image::imageops::FilterType;
     use sic_core::image::Rgba;
+    use sic_core::image::imageops::FilterType;
     use sic_testing::*;
     use std::path::PathBuf;
 
@@ -1290,7 +1288,6 @@ mod tests {
         );
     }
 
-    #[cfg(feature = "imageproc-ops")]
     #[test]
     fn test_threshold() {
         let img = setup_default_test_image();
@@ -1340,7 +1337,6 @@ mod tests {
         output_test_image_for_manual_inspection(&done_image, out_!("test_multi.png"));
     }
 
-    #[cfg(feature = "imageproc-ops")]
     mod imageproc_ops_tests {
         use super::*;
         use crate::wrapper::draw_text_inner::DrawTextInner;

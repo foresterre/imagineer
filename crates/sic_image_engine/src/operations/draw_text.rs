@@ -3,7 +3,7 @@ use crate::operations::ImageOperation;
 use crate::wrapper::draw_text_inner::DrawTextInner;
 use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
 use sic_core::image::DynamicImage;
-use sic_core::{ab_glyph, image, imageproc, SicImage};
+use sic_core::{SicImage, ab_glyph, image, imageproc};
 
 pub struct DrawText<'dt> {
     text: &'dt DrawTextInner,

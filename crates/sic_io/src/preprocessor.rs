@@ -2,7 +2,7 @@ use crate::encode::dynamic::DynamicImageFormat;
 use crate::errors::SicIoError;
 use crate::preprocessor::color_type::ColorTypePreprocessor;
 use crate::preprocessor::pick_frame::PickFramePreprocessor;
-use sic_core::{image, SicImage};
+use sic_core::{SicImage, image};
 
 pub mod color_type;
 pub mod pick_frame;

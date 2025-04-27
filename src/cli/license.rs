@@ -17,20 +17,22 @@ pub(crate) trait PrintTextFor {
 impl PrintTextFor for SelectedLicenses {
     fn print(&self, texts: &LicenseTexts) -> anyhow::Result<()> {
         let print_for_this_software = || {
-            println!("sic image tools license:\n\n{}", texts.this_software);
+            println!("imagineer image tools license:\n\n{}", texts.this_software);
 
             Ok(())
         };
 
         let print_for_dependencies = || {
             use std::io::Write;
-            println!("You should have received a licenses.html file with the distribution, but you can download another copy here.");
+            println!(
+                "You should have received a licenses.html file with the distribution, but you can download another copy here."
+            );
             print!("Open new copy [yes / no (default)]: ");
             std::io::stdout().flush()?;
 
             if let Ok(true) = request_another_copy() {
                 open::that(concat!(
-                    "https://github.com/foresterre/sic/releases/download/v",
+                    "https://github.com/foresterre/imagineer/releases/download/v",
                     clap::crate_version!(),
                     "/licenses.html"
                 ))?;

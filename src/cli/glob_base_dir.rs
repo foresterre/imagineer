@@ -4,7 +4,7 @@
 //!
 //! Changes made:
 //! * Now split to a function which returns the base/pattern instead of a glob walker and a function
-//!     which creates the a GlobWalkerBuilder which can be further adapted to one's wishes
+//!   which creates the a GlobWalkerBuilder which can be further adapted to one's wishes
 //! * Added error handling
 //!
 //! ```text

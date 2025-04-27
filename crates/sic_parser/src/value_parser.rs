@@ -3,7 +3,6 @@ use sic_image_engine::wrapper::image_path::ImageFromPath;
 use sic_image_engine::wrapper::{filter_type::FilterTypeWrap, gradient_input::GradientInput};
 use std::path::PathBuf;
 
-#[cfg(feature = "imageproc-ops")]
 use sic_image_engine::wrapper::draw_text_inner::DrawTextInner;
 use sic_image_engine::wrapper::overlay::OverlayInputs;
 
@@ -332,7 +331,6 @@ fn parse_to_path_buf(value: Option<Describable>) -> Result<PathBuf, SicParserErr
         .map(|v: Describable| PathBuf::from(v.0))
 }
 
-#[cfg(feature = "imageproc-ops")]
 impl ParseInputsFromIter for DrawTextInner {
     type Error = SicParserError;
 

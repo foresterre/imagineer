@@ -7,7 +7,7 @@ pub mod brighten;
 pub mod contrast;
 pub mod crop;
 pub mod diff;
-#[cfg(feature = "imageproc-ops")]
+
 pub mod draw_text;
 pub mod filter3x3;
 pub mod flip_horizontal;
@@ -21,7 +21,7 @@ pub mod resize;
 pub mod rotate180;
 pub mod rotate270;
 pub mod rotate90;
-#[cfg(feature = "imageproc-ops")]
+
 pub mod threshold;
 pub mod unsharpen;
 pub mod vertical_gradient;

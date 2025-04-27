@@ -162,7 +162,7 @@ impl<W: Write + Seek> IntoImageEncoder<W> for DynamicEncoder<W> {
             _ => {
                 return Err(SicIoError::UnknownImageFormat(
                     UnknownImageFormatError::Identifier(id.to_string()),
-                ))
+                ));
             }
         };
 
@@ -191,7 +191,7 @@ impl<W: Write + Seek> image::ImageEncoder for DynamicEncoder<W> {
                     .ok_or_else(|| {
                         image::ImageError::Encoding(image::error::EncodingError::new(
                             image::error::ImageFormatHint::Exact(image::ImageFormat::Gif),
-                            "sic: Unable to construct frame from raw buffer".to_string(),
+                            "Unable to construct frame from raw buffer".to_string(),
                         ))
                     })?;
 

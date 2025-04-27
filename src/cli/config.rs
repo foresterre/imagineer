@@ -3,7 +3,7 @@ use crate::cli::app::arg_names::{
 };
 use crate::cli::common_dir::CommonDir;
 use crate::cli::glob_base_dir::glob_builder_base;
-use anyhow::{bail, Context};
+use anyhow::{Context, bail};
 use clap::ArgMatches;
 use globwalk::{FileType, GlobWalker};
 use sic_core::image;
@@ -317,7 +317,9 @@ pub fn validate_jpeg_quality(quality: u8) -> anyhow::Result<u8> {
         if ALLOWED_RANGE.contains(&v) {
             Ok(v)
         } else {
-            bail!("JPEG Encoding Settings error: JPEG quality requires a number between 1 and 100 (inclusive).")
+            bail!(
+                "JPEG Encoding Settings error: JPEG quality requires a number between 1 and 100 (inclusive)."
+            )
         }
     }
 
@@ -328,8 +330,8 @@ pub fn validate_jpeg_quality(quality: u8) -> anyhow::Result<u8> {
 mod tests {
     use std::str::FromStr;
 
-    use sic_image_engine::engine::Instr;
     use sic_image_engine::ImgOp;
+    use sic_image_engine::engine::Instr;
 
     use super::*;
 

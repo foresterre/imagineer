@@ -3,6 +3,7 @@ ignore = [
     "RUSTSEC-2021-0139", # unmaintained crate ansi_term
     "RUSTSEC-2021-0145", # unmaintained crate rusttype
     "RUSTSEC-2024-0375", # https://rustsec.org/advisories/RUSTSEC-2024-0375 `atty` is unmaintained (via `clap`)
+    "RUSTSEC-2024-0436", # unmaintained crate paste
 ]
 
 [licenses]

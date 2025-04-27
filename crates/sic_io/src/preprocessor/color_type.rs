@@ -1,9 +1,9 @@
 use crate::encode::dynamic::DynamicImageFormat;
 use crate::errors::SicIoError;
 use crate::preprocessor::Preprocess;
-use sic_core::image::codecs::pnm::PnmSubtype;
-use sic_core::image::DynamicImage;
 use sic_core::SicImage;
+use sic_core::image::DynamicImage;
+use sic_core::image::codecs::pnm::PnmSubtype;
 
 pub struct ColorTypePreprocessor {
     format: DynamicImageFormat,

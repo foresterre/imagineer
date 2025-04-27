@@ -3,7 +3,7 @@ use std::path::Path;
 
 use crate::encode::dynamic::DynamicEncoder;
 use sic_core::image::ImageEncoder;
-use sic_core::{image, AnimatedImage, SicImage};
+use sic_core::{AnimatedImage, SicImage, image};
 
 use crate::errors::SicIoError;
 use crate::preprocessor::Preprocessors;

@@ -2,10 +2,10 @@ use crate::errors::SicImageEngineError;
 use crate::helper;
 use crate::operations::ImageOperation;
 use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
+use sic_core::image::DynamicImage;
 use sic_core::image::imageops;
 use sic_core::image::imageops::FilterType;
-use sic_core::image::DynamicImage;
-use sic_core::{image, SicImage};
+use sic_core::{SicImage, image};
 
 #[derive(Debug)]
 pub struct Resize {

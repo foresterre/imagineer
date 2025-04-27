@@ -165,7 +165,6 @@ mod tests {
             assert_eq!(result.unwrap(), expected);
         }
 
-        #[cfg(feature = "imageproc-ops")]
         mod imageproc_ops_tests {
             use super::*;
             use sic_core::image::Rgba;

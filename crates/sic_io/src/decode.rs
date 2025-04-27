@@ -3,7 +3,7 @@ use std::io::{BufRead, BufReader, Cursor, Read, Seek};
 use std::path::Path;
 
 use crate::errors::SicIoError;
-use sic_core::{image, AnimatedImage, SicImage};
+use sic_core::{AnimatedImage, SicImage, image};
 
 #[derive(Default)]
 pub struct SicImageDecoder {

@@ -3,7 +3,7 @@
 #[macro_use]
 pub mod common;
 
-use common::{setup_output_path, SicTestCommandBuilder};
+use common::{SicTestCommandBuilder, setup_output_path};
 use std::ffi::OsStr;
 use std::path::Path;
 
