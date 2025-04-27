@@ -22,7 +22,6 @@ pub enum OperationId {
     Contrast,
     Crop,
     Diff,
-    #[cfg(feature = "imageproc-ops")]
     DrawText,
     Filter3x3,
     FlipHorizontal,
@@ -36,7 +35,6 @@ pub enum OperationId {
     Rotate90,
     Rotate180,
     Rotate270,
-    #[cfg(feature = "imageproc-ops")]
     Threshold,
     Unsharpen,
     VerticalGradient,
@@ -77,7 +75,6 @@ impl OperationId {
             OperationId::Contrast => 1,
             OperationId::Crop => 4,
             OperationId::Diff => 1,
-            #[cfg(feature = "imageproc-ops")]
             OperationId::DrawText => 5,
             OperationId::Filter3x3 => 9,
             OperationId::FlipHorizontal => 0,
@@ -91,7 +88,6 @@ impl OperationId {
             OperationId::Rotate90 => 0,
             OperationId::Rotate180 => 0,
             OperationId::Rotate270 => 0,
-            #[cfg(feature = "imageproc-ops")]
             OperationId::Threshold => 0,
             OperationId::Unsharpen => 2,
             OperationId::VerticalGradient => 2,
@@ -139,7 +135,6 @@ impl OperationId {
             OperationId::Diff => {
                 Instr::Operation(ImgOp::Diff(parse_inputs_by_type!(inputs, ImageFromPath)?))
             }
-            #[cfg(feature = "imageproc-ops")]
             OperationId::DrawText => {
                 use sic_image_engine::wrapper::draw_text_inner::DrawTextInner;
                 Instr::Operation(ImgOp::DrawText(parse_inputs_by_type!(
@@ -174,7 +169,6 @@ impl OperationId {
             OperationId::Rotate90 => Instr::Operation(ImgOp::Rotate90),
             OperationId::Rotate180 => Instr::Operation(ImgOp::Rotate180),
             OperationId::Rotate270 => Instr::Operation(ImgOp::Rotate270),
-            #[cfg(feature = "imageproc-ops")]
             OperationId::Threshold => Instr::Operation(ImgOp::Threshold),
             OperationId::Unsharpen => {
                 Instr::Operation(ImgOp::Unsharpen(parse_inputs_by_type!(inputs, (f32, i32))?))

@@ -3,7 +3,7 @@ use crate::operations::ImageOperation;
 use crate::wrapper::image_path::ImageFromPath;
 use rayon::iter::{IndexedParallelIterator, IntoParallelRefMutIterator, ParallelIterator};
 use sic_core::image::{DynamicImage, GenericImageView, ImageBuffer, Rgba, RgbaImage};
-use sic_core::{image, SicImage};
+use sic_core::{SicImage, image};
 use std::cmp;
 use std::convert::TryFrom;
 

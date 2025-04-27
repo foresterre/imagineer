@@ -5,15 +5,15 @@ use std::io::{self, Read, Seek, SeekFrom, Stdout, Write};
 use crate::cli::config::{Config, InputOutputMode, InputOutputModeType, PathVariant};
 use crate::cli::license::LicenseTexts;
 use crate::cli::license::PrintTextFor;
-use anyhow::{anyhow, bail, Context};
+use anyhow::{Context, anyhow, bail};
 use sic_core::image;
 use sic_image_engine::engine::ImageEngine;
 use sic_io::decode;
 use sic_io::decode::SicImageDecoder;
-use sic_io::encode::dynamic::{DynamicEncoder, IntoImageEncoder};
 use sic_io::encode::SicImageEncoder;
-use sic_io::encode_settings::jpeg::JpegQuality;
+use sic_io::encode::dynamic::{DynamicEncoder, IntoImageEncoder};
 use sic_io::encode_settings::EncodeSettings;
+use sic_io::encode_settings::jpeg::JpegQuality;
 use sic_io::preprocessor::Preprocessors;
 
 pub fn run_with_devices<'c>(

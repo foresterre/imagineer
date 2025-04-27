@@ -35,8 +35,8 @@ pub fn parse_script(script: &str) -> Result<Vec<Instr>, SicParserError> {
 
 #[cfg(test)]
 mod tests {
-    use sic_image_engine::engine::Instr;
     use sic_image_engine::ImgOp;
+    use sic_image_engine::engine::Instr;
 
     use super::*;
 

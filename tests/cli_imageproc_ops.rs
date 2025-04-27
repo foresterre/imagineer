@@ -1,4 +1,3 @@
-#![cfg(feature = "imageproc-ops")]
 #![deny(clippy::all)]
 
 pub mod common;
@@ -34,7 +33,6 @@ mod tests {
             .input_from_resources("unsplash_763569_cropped.jpg")
             .output_in_target(out)
             .with_args(["--apply-operations", &ops])
-            .with_feature("imageproc-ops")
             .spawn_child();
 
         let result = process.wait();
@@ -79,7 +77,6 @@ mod tests {
             .input_from_resources("unsplash_763569_cropped.jpg")
             .output_in_target(out)
             .with_args(ops)
-            .with_feature("imageproc-ops")
             .spawn_child();
 
         let result = process.wait().unwrap();

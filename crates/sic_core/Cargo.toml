@@ -1,21 +1,20 @@
 [package]
 name = "sic_core"
-version = "0.22.1"
+version = "0.23.0"
 authors = ["Martijn Gribnau <garm@ilumeo.com>"]
-description = "Component of the sic cli: re-exports global dependencies to sub-crates."
+description = "Common types and re-exports for the 'imagineer' image cli project"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/foresterre/sic"
 readme = "../../README.md"
 
-edition = "2021"
-rust-version = "1.61"
+edition = "2024"
+rust-version = "1.86"
 
 [dependencies]
-image = { version = "0.25.5", features = ["rayon"] }
-imageproc = { version = "0.25.0", optional = true }
-ab_glyph = { version = "0.2.29", optional = true }
-thiserror = "2"
+image = { version = "0.25.6", features = ["rayon"] }
+imageproc = { version = "0.25.0" }
+ab_glyph = { version = "0.2.29" }
+thiserror = { workspace = true }
 
 [features]
 nasm = ["image/nasm"]
-imageproc-ops = ["imageproc", "ab_glyph"]

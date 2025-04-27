@@ -5,11 +5,8 @@
 //! components depend on the same version of the image crate, which is required for binary
 //! compatibility.
 
-/// The re-export of image ensures all sic components use the same version.
-pub use image;
-
-#[cfg(feature = "imageproc-ops")]
-pub use {ab_glyph, imageproc};
+/// The re-export of image ensures all crates use the same version.
+pub use {ab_glyph, image, imageproc};
 
 use image::DynamicImage;
 use std::convert::TryFrom;
@@ -21,7 +18,7 @@ pub use animated::AnimatedImage;
 
 pub use errors::SicCoreError;
 
-/// The fundamental image data structure in `sic`.
+/// The fundamental image data structure in `imagineer`.
 /// An image can either be animated, in which case it consists of a collection of `image::Frame` frames,
 /// or static, in which case it's represented as an `image::DynamicImage`.
 #[derive(Clone, Debug)]

@@ -1,6 +1,6 @@
 [package]
 name = "sic_cli_ops"
-version = "0.22.1"
+version = "0.23.0"
 authors = ["Martijn Gribnau <garm@ilumeo.com>"]
 description = "Component of the sic cli: parses images operations invoked from the cli."
 license = "MIT OR Apache-2.0"
@@ -10,20 +10,18 @@ readme = "../../README.md"
 edition = "2021"
 rust-version = "1.61"
 
-
 [dependencies]
-sic_image_engine = { version = "0.22.0", path = "../sic_image_engine" }
-sic_parser = { version = "0.22.0", path = "../sic_parser" }
+sic_image_engine = { workspace = true }
+sic_parser = { workspace = true }
 
-clap = "2.34.0"
 strum = "0.27.1"
 strum_macros = "0.27.1"
 thiserror = "2"
 
 [dev-dependencies]
-sic_core = { version = "0.22.0", path = "../sic_core" }
-sic_testing = { version = "0.22.0", path = "../sic_testing" }
-parameterized = "2.0.0"
+sic_core = { workspace = true }
+sic_testing = { workspace = true }
+parameterized = { workspace = true }
 
 [features]
 imageproc-ops = []

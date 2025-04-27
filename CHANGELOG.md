@@ -1,25 +1,26 @@
 # Changelog
 
-sic is a CLI tool to (batch) process images and an [image-rs](https://github.com/image-rs/image) front-end.
+'imagineer' is a CLI tool to (batch) process images and an [image-rs](https://github.com/image-rs/image) front-end.
 It can be used to convert between image formats and manipulate images using image operations.
 It aims to include all primary [image](https://github.com/image-rs/image) functionality, and eventually also
 support the most prominent [imageproc](https://github.com/image-rs/imageproc) manipulation routines.
 
-The changelog below lists notable changes for [sic](https://github.com/foresterre/sic). It doesn't list most internal
-changes.
+In the changelog below, you may find the notable changes to [imagineer](https://github.com/foresterre/imagineer) per release.
 
-## [Unreleased]
+## Unreleased
 
-[unreleased]: https://github.com/foresterre/sic/compare/v0.22.4...HEAD
+## 0.23.0 - 2025-04-27
 
 ### Changed
 
+- Renamed project and binary to 'imagineer', a pun on the meaning of the words "image", "engineering" and "the imagination".
 - Farbfeld encoder now converts color type to Rgba16, unless disabled by user.
 - JPEG encoder now converts color type to Rgb8 for static images, unless disabled by user.
 - GIG encoder now converts color type to Rgba8 for static images, unless disabled by user
 - PBM encoder now converts color type to L8 for static images, unless disabled by user.
 - PGM encoder now converts color type to L8 for static images, unless disabled by user.
 - PPM encoder now converts color type to Rgb8 for static images, unless disabled by user.
+- Dependency 'imageproc' is no longer optional
 
 ### Removed
 
@@ -27,11 +28,13 @@ changes.
 
 ### Notable dependency updates
 
-- Updated [image](https://github.com/image-rs/image) to 0.25.2
+- Updated [image](https://github.com/image-rs/image) to 0.25.6
 
 ### Disabled
 
 - Disabled AVIF decoder for now due to cross-platform compilation issues (dav1d-rs).
+
+[0.23.0]: https://github.com/foresterre/sic/compare/v0.22.4...v0.23.0
 
 ## [0.22.4] - 2023-09-17
 

@@ -1,10 +1,11 @@
 #![deny(clippy::all)]
 
-use sic::cli::app::arg_names::{ARG_DEP_LICENSES, ARG_LICENSE};
-use sic::cli::app::build_app_config;
-use sic::cli::config::InputOutputMode;
-use sic::cli::license::LicenseTexts;
-use sic::cli::pipeline::{run_display_licenses, run_with_devices};
+use imagineer::cli::app;
+use imagineer::cli::app::arg_names::{ARG_DEP_LICENSES, ARG_LICENSE};
+use imagineer::cli::app::build_app_config;
+use imagineer::cli::config::InputOutputMode;
+use imagineer::cli::license::LicenseTexts;
+use imagineer::cli::pipeline::{run_display_licenses, run_with_devices};
 
 const LICENSE_SELF: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/LICENSE-MIT"));
 
@@ -14,7 +15,7 @@ const HELP_OPERATIONS_AVAILABLE: &str =
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 fn main() -> anyhow::Result<()> {
-    let app = sic::cli::app::create_app(VERSION, ABOUT, HELP_OPERATIONS_AVAILABLE);
+    let app = app::create_app(VERSION, ABOUT, HELP_OPERATIONS_AVAILABLE);
     let matches = app.get_matches();
 
     let license_display = matches.is_present(ARG_LICENSE) || matches.is_present(ARG_DEP_LICENSES);

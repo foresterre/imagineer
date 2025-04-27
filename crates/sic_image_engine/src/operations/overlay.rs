@@ -2,8 +2,8 @@ use crate::errors::SicImageEngineError;
 use crate::operations::ImageOperation;
 use crate::wrapper::overlay::OverlayInputs;
 use rayon::iter::{IndexedParallelIterator, IntoParallelRefMutIterator, ParallelIterator};
-use sic_core::image::{imageops, DynamicImage};
-use sic_core::{image, SicImage};
+use sic_core::image::{DynamicImage, imageops};
+use sic_core::{SicImage, image};
 use std::convert::TryFrom;
 
 pub struct Overlay<'overlay> {

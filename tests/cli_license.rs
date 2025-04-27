@@ -14,10 +14,12 @@ fn run_license_command() -> Output {
 fn cli_license_starts_with() {
     let res = run_license_command();
 
-    let begin_text = "sic image tools license:";
+    let begin_text = "imagineer image tools license:";
 
     assert!(res.status.success());
-    assert!(std::str::from_utf8(&res.stdout)
-        .unwrap()
-        .starts_with(begin_text));
+    assert!(
+        std::str::from_utf8(&res.stdout)
+            .unwrap()
+            .starts_with(begin_text)
+    );
 }

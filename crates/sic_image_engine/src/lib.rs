@@ -4,7 +4,6 @@
 #[macro_use]
 extern crate strum_macros;
 
-#[cfg(feature = "imageproc-ops")]
 use crate::wrapper::draw_text_inner::DrawTextInner;
 use crate::wrapper::gradient_input::GradientInput;
 use crate::wrapper::image_path::ImageFromPath;
@@ -23,7 +22,7 @@ pub enum ImgOp {
     Contrast(f32),
     Crop((u32, u32, u32, u32)),
     Diff(ImageFromPath),
-    #[cfg(feature = "imageproc-ops")]
+
     DrawText(DrawTextInner),
     Filter3x3([f32; 9]),
     FlipHorizontal,
@@ -37,7 +36,7 @@ pub enum ImgOp {
     Rotate90,
     Rotate180,
     Rotate270,
-    #[cfg(feature = "imageproc-ops")]
+
     Threshold,
     Unsharpen((f32, i32)),
     VerticalGradient(GradientInput),

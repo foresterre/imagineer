@@ -3,7 +3,7 @@
 #[macro_use]
 pub mod common;
 
-use common::{SicTestCommandBuilder, DEFAULT_IN};
+use common::{DEFAULT_IN, SicTestCommandBuilder};
 
 #[test]
 fn script_from_file_ok() {

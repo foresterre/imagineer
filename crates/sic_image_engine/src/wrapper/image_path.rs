@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use sic_io::decode::{file_reader, SicImageDecoder};
+use sic_io::decode::{SicImageDecoder, file_reader};
 
 use crate::errors::SicImageEngineError;
 use sic_core::SicImage;

@@ -2,8 +2,8 @@ use crate::errors::SicImageEngineError;
 use crate::operations::ImageOperation;
 use crate::wrapper::gradient_fn;
 use crate::wrapper::gradient_input::GradientInput;
-use sic_core::image::imageops;
 use sic_core::SicImage;
+use sic_core::image::imageops;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct HorizontalGradient {

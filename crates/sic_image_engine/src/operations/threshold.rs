@@ -2,8 +2,9 @@ use crate::errors::SicImageEngineError;
 use crate::operations::ImageOperation;
 use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
 use sic_core::{
+    SicImage,
     image::{self, DynamicImage, RgbaImage},
-    imageproc, SicImage,
+    imageproc,
 };
 
 pub struct Threshold;

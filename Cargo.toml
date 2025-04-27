@@ -1,8 +1,8 @@
 [package]
-name = "sic"
-version = "0.22.4"
+name = "imagineer"
+version = "0.23.0"
 authors = ["Martijn Gribnau <garm@ilumeo.com>"]
-description = "Accessible image processing and conversion from the terminal (and a front-end for the 'image' crate)."
+description = "Accessible image processing and conversion from the terminal (and a front-end for the 'image' crate). Formerly 'sic'"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/foresterre/sic"
 readme = "README.md"
@@ -16,28 +16,18 @@ exclude = [
 keywords = ["image", "converter", "cli", "front-end", "image-cli"]
 categories = ["multimedia::images", "command-line-utilities"]
 
-edition = "2021"
-rust-version = "1.79"
+edition = "2024"
+rust-version = "1.86"
 
 [package.metadata.release]
 tag-prefix = ""
 
-[workspace]
-members = [
-    "crates/sic_cli_ops",
-    "crates/sic_core",
-    "crates/sic_image_engine",
-    "crates/sic_io",
-    "crates/sic_parser",
-    "crates/sic_testing",
-]
-
 [dependencies]
-sic_cli_ops = { version = "0.22.0", path = "crates/sic_cli_ops" }
-sic_core = { version = "0.22.0", path = "crates/sic_core" }
-sic_io = { version = "0.22.0", path = "crates/sic_io" }
-sic_image_engine = { version = "0.22.0", path = "crates/sic_image_engine" }
-sic_parser = { version = "0.22.0", path = "crates/sic_parser" }
+sic_cli_ops = { workspace = true }
+sic_core = { workspace = true }
+sic_io = { workspace = true }
+sic_image_engine = { workspace = true }
+sic_parser = { workspace = true }
 
 anyhow = "1"
 atty = "0.2.14"
@@ -50,11 +40,8 @@ clap = "2.34.0" # for examples/gen_completions.rs
 parameterized = "2.0.0"
 yare = "3"
 
-[build-dependencies]
-
 [features]
-default = ["imageproc-ops", "nasm"]
-imageproc-ops = ["sic_core/imageproc-ops", "sic_cli_ops/imageproc-ops", "sic_image_engine/imageproc-ops", "sic_parser/imageproc-ops"]
+default = ["nasm"]
 nasm = ["sic_core/nasm"]
 
 output-test-images = []
@@ -63,3 +50,29 @@ output-test-images = []
 panic = "abort"
 lto = true
 codegen-units = 1
+
+[workspace]
+resolver = "3"
+members = [
+    "crates/sic_cli_ops",
+    "crates/sic_core",
+    "crates/sic_image_engine",
+    "crates/sic_io",
+    "crates/sic_parser",
+    "crates/sic_testing",
+]
+
+[workspace.dependencies]
+# internal crates
+sic_cli_ops = { version = "0.23.0", path = "crates/sic_cli_ops" }
+sic_core = { version = "0.23.0", path = "crates/sic_core" }
+sic_io = { version = "0.23.0", path = "crates/sic_io" }
+sic_image_engine = { version = "0.23.0", path = "crates/sic_image_engine" }
+sic_parser = { version = "0.23.0", path = "crates/sic_parser" }
+sic_testing = { version = "0.23.0", path = "crates/sic_testing" }
+
+# common dependencies
+thiserror = "2"
+
+# common dev-dependencies
+parameterized = "2.0.0"
