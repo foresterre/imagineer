@@ -33,8 +33,8 @@ jobs:
         id: set_output
         shell: bash
         run: |
-          echo "archive=sic-${{ matrix.target }}-${{ github.event.release.tag_name }}.${{ matrix.archive_ext }}" >> $GITHUB_OUTPUT
-          echo "subfolder=sic-${{ matrix.target }}-${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+          echo "archive=imagineer-${{ matrix.target }}-${{ github.event.release.tag_name }}.${{ matrix.archive_ext }}" >> $GITHUB_OUTPUT
+          echo "subfolder=imagineer-${{ matrix.target }}-${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
 
       - name: show_outputs
         shell: bash
@@ -90,21 +90,21 @@ jobs:
         if: matrix.os == 'macos-latest'
         shell: bash
         run: |
-          cp  ./target/${{ matrix.target }}/release/sic ${{ steps.set_output.outputs.subfolder }}
+          cp  ./target/${{ matrix.target }}/release/imagineer ${{ steps.set_output.outputs.subfolder }}
           gtar --create --gzip --file=${{ steps.set_output.outputs.archive }} ${{ steps.set_output.outputs.subfolder }}
 
       - name: pack_archive_linux
         if: matrix.os == 'ubuntu-latest'
         shell: bash
         run: |
-          cp target/${{ matrix.target }}/release/sic ${{ steps.set_output.outputs.subfolder }}
+          cp target/${{ matrix.target }}/release/imagineer ${{ steps.set_output.outputs.subfolder }}
           tar --create --gzip --file=${{ steps.set_output.outputs.archive }} ${{ steps.set_output.outputs.subfolder }}
 
       - name: pack_archive_windows
         if: matrix.os == 'windows-latest'
         shell: bash
         run: |
-          cp target/${{ matrix.target }}/release/sic.exe ./${{ steps.set_output.outputs.subfolder }}
+          cp target/${{ matrix.target }}/release/imagineer.exe ./${{ steps.set_output.outputs.subfolder }}
           7z a -tzip ${{ steps.set_output.outputs.archive }} ${{ steps.set_output.outputs.subfolder }}
 
       - name: upload_artifact
