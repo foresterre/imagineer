@@ -1,39 +1,46 @@
-<img alt="The sic project logo" align="right" src="resources/logo/sic_100.jpg">
+<img alt="The imagineer project logo" align="right" src="resources/logo/imagineer_100.jpg">
 
-# sic image cli
+# imagineer image cli
 
 
-[![ci](https://github.com/foresterre/sic/workflows/github_actions_ci/badge.svg)](https://github.com/foresterre/sic/actions?query=workflow%3Agithub_actions_ci)
-[![Crates.io version shield](https://img.shields.io/crates/v/sic.svg)](https://crates.io/crates/sic)
-[![Docs](https://docs.rs/sic/badge.svg)](https://docs.rs/crate/sic)
-[![Crates.io license shield](https://img.shields.io/crates/l/sic.svg)](https://crates.io/crates/sic)
+[![ci](https://github.com/foresterre/imagineer/workflows/github_actions_ci/badge.svg)](https://github.com/foresterre/imagineer/actions?query=workflow%3Agithub_actions_ci)
+[![Crates.io version shield](https://img.shields.io/crates/v/imagineer.svg)](https://crates.io/crates/imagineer)
+[![Docs](https://docs.rs/imagineer/badge.svg)](https://docs.rs/crate/imagineer)
+[![Crates.io license shield](https://img.shields.io/crates/l/imagineer.svg)](https://crates.io/crates/imagineer)
 
 _Convert images and perform image operations from the command-line._
 
-`sic` (sic image cli) is a front-end for the [image crate](https://github.com/image-rs/image).
+`imagineer` (formerly 'sic' image cli) is a front-end for the [image crate](https://github.com/image-rs/image).
 Aside from image operations supplied by the image crate, a few additional helpful operations such
-as diff, are included. Operations provided by the [imageproc](https://github.com/image-rs/imageproc)
-crate can be enabled by compiling with the `imageproc-ops` feature. We intend to provide more extensive support for imageproc
-operations in a future release. `sic` supports operations on both static and animated images.
+as diff, and some provided via [imageproc](https://github.com/image-rs/imageproc) are included. 
+Imagineer has support for static and animated images.
+
+**The new name**
+
+- Why a rename? 'sic' originally stood for "simple image cli", but if you have two custom parsers, support batch image processing, static and animated images, is it still "simple"?
+- A few years ago 'sic' became 'sic image cli', but mostly just for me
+- Recently, I decided I like a new name, something fun, something which is closer to the word 'image', and also the name of the crate for which this project is a CLI frontend, some crate names were already taken,
+- But, I found something
+- Thus, now we have 'imagineer', a pun on the meaning of the words "image", "engineering" and "the imagination"
 
 ### Installation
 
 #### Install with cargo:
 
-* run `cargo install sic`
+* run `cargo install imagineer`
 
 #### Pre build binaries
 
-* download from [releases](https://github.com/foresterre/sic/releases).
+* download from [releases](https://github.com/foresterre/imagineer/releases).
 
 
 #### Build from source
 
 - Setup rust and cargo (for example using [rustup](https://rustup.rs/))
-- Clone this repo: `git clone https://github.com/foresterre/sic.git && cd sic`
+- Clone this repo: `git clone https://github.com/foresterre/imagineer.git && cd imagineer`
 - Build a release: `cargo build --release`
 
-`sic` is usually build against the latest stable Rust version, but may also work with older versions.
+`imagineer` is usually build against the latest stable Rust version, but may also work with older versions.
 
 #### Using a package manager
 
@@ -72,12 +79,12 @@ emerge -av media-gfx/sic
 
 Convert an image from one format to another, for example from PNG to JPG.
 
-* Command: `sic --input <input> --output <output>`
-* Shorthand: `sic -i <input> -o <output>`
-* Example: `sic -i input.png -o output.jpg` <br>
+* Command: `imagineer --input <input> --output <output>`
+* Shorthand: `imagineer -i <input> -o <output>`
+* Example: `imagineer -i input.png -o output.jpg` <br>
 
 If you want to explicitly set the image output format, you may do so by providing the `--output-format <format>` argument.
-Otherwise, sic will attempt to infer the format from the output file extension.
+Otherwise, imagineer will attempt to infer the format from the output file extension.
 
 `--help` can be used to view a complete list of supported image output formats. Included are:
 * `AVIF`, `BMP`, `OpenExr`, `Farbfeld`, `GIF`, `ICO`, `JPEG`, `PNG`, `PNM` (`PAM`, `PBM`, `PGM` and `PPM`), `QOI` `TGA`, `TIFF` and `WebP`.
@@ -91,16 +98,16 @@ To use ascii encoding, you can provide the following flag: `--pnm-encoding-ascii
 ##### Convert or apply operations on a set of images
 
 For the use case where you have a directory containing several (hundreds of) images which you like to convert to different
-format, or on which you perhaps want to apply certain image operations, `sic` provides built-in glob pattern matching.
+format, or on which you perhaps want to apply certain image operations, `imagineer` provides built-in glob pattern matching.
 This mode can be used by providing the `--glob-input` and `--glob-output` options instead of `--input` and `--output` respectively.
 
 Examples:
-* To convert a directory of images from PNG to JPG, you can run sic with the following arguments: <br>
-    * `sic --glob-input "*.png" --glob-output output_dir --output-format jpg"`
+* To convert a directory of images from PNG to JPG, you can run imagineer with the following arguments: <br>
+    * `imagineer --glob-input "*.png" --glob-output output_dir --output-format jpg"`
 * To convert all images with the `jpg`, `jpeg` and `png` extensions to BMP:
-    * `sic --glob-input "*.{jpg, jpeg, png}" --glob-output output_dir --output-format bmp`
+    * `imagineer --glob-input "*.{jpg, jpeg, png}" --glob-output output_dir --output-format bmp`
 * To emboss all images in a folder (assuming it contains only supported image files and no folders):
-    * `sic --glob-input "*" --glob-output embossed_output --filter3x3 -1 -1 0 -1 1 1 0 1 1`
+    * `imagineer --glob-input "*" --glob-output embossed_output --filter3x3 -1 -1 0 -1 1 1 0 1 1`
 
 A few things worth noticing: 1) We use quotation marks (`"`) around the input argument, so our shell won't expand the
 glob pattern to a list of files. 2) When using glob mode, our output (`--glob-output`) should be a folder instead of a file. 3) We
@@ -114,8 +121,8 @@ all input files. If output directories do not exist, they will be created.
 
 ##### Image operations
 
-In `sic`, you can manipulate images using image operations. Image operations can be used directly from the CLI, or through
-sic's _image script_. 
+With `imagineer`, you can manipulate images using image operations. Image operations can be used directly from the CLI, or through
+imagineer's _image script_. 
 
 NB: Operations are applied in a left-to-right order and are generally not commutative. This may be especially surprising when
 applying image operation via CLI options and flags.
@@ -123,15 +130,15 @@ applying image operation via CLI options and flags.
 ###### 📜 image script
 
 Use this method by using the `--apply-operations "<operations>"` (shorthand: `-x`) cli argument and providing
-statements which tell `sic` what operations should be applied on the image, for example: <br>
-`sic -i input.jpg -o output.jpg --apply-operations "flip-horizontal; blur 10; resize 250 250"` <br>
+statements which tell `imagineer` what operations should be applied on the image, for example: <br>
+`imagineer -i input.jpg -o output.jpg --apply-operations "flip-horizontal; blur 10; resize 250 250"` <br>
 When more than one image operation is provided, the separator `;` should be used to separate each operation statement. <br><br>
 
 ###### ✏️ CLI ops
 
 Use this method by providing cli image operation arguments, such as `--blur` and `--crop`, directly.  
 If we use the _cli operations_ method the previously shown example becomes: <br>
-`sic -i input.png -o output.jpg --flip-horizontal --blur 10 --resize 250 250` <br>
+`imagineer -i input.png -o output.jpg --flip-horizontal --blur 10 --resize 250 250` <br>
 <br><br>
 
 ##### Available image operations
@@ -152,7 +159,7 @@ If we use the _cli operations_ method the previously shown example becomes: <br>
 |hue rotate         | `hue-rotate <int>`                        | Rotates the hue, argument is in degrees. Rotates `<int>%360` degrees. |
 |invert             | `invert`                                  | Invert the colours of an image. |
 |overlay            | `overlay <path> <uint> <uint>`            | Overlay an image loaded from the provided argument path over the input image (at a certain position). |
-|resize             | `resize <uint> <uint>`                    | Resize the image to x by y pixels. Can both up- and downscale. Uses a `lanczos3` sampling filter unless overridden. Prior to sic v0.11, the default sampling filter was `gaussian`. |
+|resize             | `resize <uint> <uint>`                    | Resize the image to x by y pixels. Can both up- and downscale. Uses a `lanczos3` sampling filter unless overridden. Prior to imagineer (back then still called 'sic'), v0.11, the default sampling filter was `gaussian`. |
 | >                 | `set preserve-aspect-ratio <bool>`        | Enables preservation of the aspect ratio when resizing. |
 | >                 | `set sampling-filter <value>`             | When resizing use the `<value>` sampling filter. Choices are `catmullrom`, `gaussian`,`lanczos3`,`nearest`,`triangle`. |
 |rotate90           | `rotate90`                                | Rotate an image 90 degrees. |
@@ -195,29 +202,29 @@ _legend_:
 ##### Examples
 
 **blur** example: <br>
-`sic -i in.png -o out.png --apply-operations "blur 1.3;"` <br>
+`imagineer -i in.png -o out.png --apply-operations "blur 1.3;"` <br>
 or <br>
-`sic -i in.png -o out.png --blur 1.3`
+`imagineer -i in.png -o out.png --blur 1.3`
 
 **brighten** example: <br>
-`sic -i in.png -o out.png --apply-operations "brighten 2;"` <br>
+`imagineer -i in.png -o out.png --apply-operations "brighten 2;"` <br>
 or <br>
-`sic -i in.png -o out.png --brighten 2`
+`imagineer -i in.png -o out.png --brighten 2`
 
 **contrast** example: <br>
-`sic -i in.png -o out.png --apply-operations "contrast 0.7;"` <br>
+`imagineer -i in.png -o out.png --apply-operations "contrast 0.7;"` <br>
 or <br>
-`sic -i in.png -o out.png --contrast 0.7`
+`imagineer -i in.png -o out.png --contrast 0.7`
 
 **crop** example: <br>
-`sic -i in.png -o out.png --apply-operations "crop 0 0 10 10;"` <br>
+`imagineer -i in.png -o out.png --apply-operations "crop 0 0 10 10;"` <br>
 or <br>
-`sic -i in.png -o out.png --crop 0 0 10 10`
+`imagineer -i in.png -o out.png --crop 0 0 10 10`
 
 **diff** example: <br>
-`sic -i a.png -o diff_between_a_and_b.png --apply-operations "diff 'b.png'"` <br>
+`imagineer -i a.png -o diff_between_a_and_b.png --apply-operations "diff 'b.png'"` <br>
 or <br>
-`sic -i a.png -o diff_between_a_and_b.png --diff b.png`
+`imagineer -i a.png -o diff_between_a_and_b.png --diff b.png`
 
 | a                                      | b                                      | output                                                         |
 | -------------------------------------- |--------------------------------------- | -------------------------------------------------------------- |
@@ -230,9 +237,9 @@ With an animated image:
 | ![a](resources/loop.gif) | ![b](resources/loop-diff.gif) | ![output](resources/help-images/diff/loop-diffed.gif) |
 
 **draw-text** example (requires build feature `imageproc-ops`): <br>
-`sic -i in.png -o out.png --apply-operations "draw-text '<3' coord(10, 2) rgba(255, 0, 0, 255) size(14) font('./Lato-Regular.ttf')"` <br>
+`imagineer -i in.png -o out.png --apply-operations "draw-text '<3' coord(10, 2) rgba(255, 0, 0, 255) size(14) font('./Lato-Regular.ttf')"` <br>
 or <br>
-`sic -i in.png -o out.png --draw-text "<3" "coord(10, 2)" "rgba(255, 0, 0, 255)" "size(14)" "font('Lato-Regular.ttf')"`
+`imagineer -i in.png -o out.png --draw-text "<3" "coord(10, 2)" "rgba(255, 0, 0, 255)" "size(14)" "font('Lato-Regular.ttf')"`
 
 | input                                         | output                                                         |
 | --------------------------------------------- | -------------------------------------------------------------- |
@@ -240,102 +247,102 @@ or <br>
 
 
 **filter3x3** example: <br>
-`sic -i in.png -o out.png --apply-operations "filter3x3 -1 -1 0 -1 0 1 0 1 1"` <br>
+`imagineer -i in.png -o out.png --apply-operations "filter3x3 -1 -1 0 -1 0 1 0 1 1"` <br>
 or <br>
-`sic -i in.png -o out.png --filter3x3 -1 -1 0 -1 0 1 0 1 1`
+`imagineer -i in.png -o out.png --filter3x3 -1 -1 0 -1 0 1 0 1 1`
 
 **flip horizontal** example: <br>
-`sic -i in.png -o out.png --apply-operations "flip-horizontal"` <br>
+`imagineer -i in.png -o out.png --apply-operations "flip-horizontal"` <br>
 or <br>
-`sic -i in.png -o out.png --flip-horizontal`
+`imagineer -i in.png -o out.png --flip-horizontal`
 
 **flip vertical** example: <br>
-`sic -i in.png -o out.png --apply-operations "flip-vertical"` <br>
+`imagineer -i in.png -o out.png --apply-operations "flip-vertical"` <br>
 or <br>
-`sic -i in.png -o out.png --flip-vertical`
+`imagineer -i in.png -o out.png --flip-vertical`
 
 **gray scale** example: <br>
-`sic -i in.png -o out.png --apply-operations "grayscale"` <br>
+`imagineer -i in.png -o out.png --apply-operations "grayscale"` <br>
 or <br>
-`sic -i in.png -o out.png --grayscale`
+`imagineer -i in.png -o out.png --grayscale`
 
 **horizontal gradient** example: <br>
-`sic -i in.png -o out.png --apply-operations "horizontal-gradient rgba(255, 0, 0, 255) rgba(0, 0, 255, 255)"` <br>
+`imagineer -i in.png -o out.png --apply-operations "horizontal-gradient rgba(255, 0, 0, 255) rgba(0, 0, 255, 255)"` <br>
 or <br>
-`sic -i in.png -o out.png --horizontal-gradient "rgba(255, 0, 0, 255)" "rgba(0, 0, 255, 255)"`
+`imagineer -i in.png -o out.png --horizontal-gradient "rgba(255, 0, 0, 255)" "rgba(0, 0, 255, 255)"`
 
 **hue rotate** example: <br>
-`sic -i in.png -o out.png --apply-operations "hue-rotate -90"` <br>
+`imagineer -i in.png -o out.png --apply-operations "hue-rotate -90"` <br>
 or <br>
-`sic -i in.png -o out.png --hue-rotate -90`
+`imagineer -i in.png -o out.png --hue-rotate -90`
 
 **invert** example: <br>
-`sic -i in.png -o out.png --apply-operations "invert"` <br>
+`imagineer -i in.png -o out.png --apply-operations "invert"` <br>
 or <br>
-`sic -i in.png -o out.png --invert`
+`imagineer -i in.png -o out.png --invert`
 
 **overlay** example: <br>
-`sic -i in.png -o out.png --apply-operations "overlay 'image.png' 10 10"` <br>
+`imagineer -i in.png -o out.png --apply-operations "overlay 'image.png' 10 10"` <br>
 or <br>
-`sic -i in.png -o out.png --overlay "image.png" 10 10`
+`imagineer -i in.png -o out.png --overlay "image.png" 10 10`
 
 **resize** example: <br>
-`sic -i in.png -o out.png --apply-operations "resize 100 100"` <br>
+`imagineer -i in.png -o out.png --apply-operations "resize 100 100"` <br>
 or <br>
-`sic -i in.png -o out.png --resize 100 100`
+`imagineer -i in.png -o out.png --resize 100 100`
 
 **resize** with **preserve aspect ratio** example: <br>
-`sic -i in.png -o out.png --apply-operations "set preserve-aspect-ratio true; resize 100 100"` <br>
+`imagineer -i in.png -o out.png --apply-operations "set preserve-aspect-ratio true; resize 100 100"` <br>
 or <br>
-`sic -i in.png -o out.png --preserve-aspect-ratio true --resize 100 100`
+`imagineer -i in.png -o out.png --preserve-aspect-ratio true --resize 100 100`
 
 **resize** with **custom sampling filter** (default is 'lanczos3') example: <br>
-`sic -i in.png -o out.png --apply-operations "set sampling-filter triangle; resize 100 100"` <br>
+`imagineer -i in.png -o out.png --apply-operations "set sampling-filter triangle; resize 100 100"` <br>
 or <br>
-`sic -i in.png -o out.png --sampling-filter triangle --resize 100 100`
+`imagineer -i in.png -o out.png --sampling-filter triangle --resize 100 100`
 
 **rotate 90 degree** example: <br>
-`sic -i in.png -o out.png --apply-operations "rotate90"` <br>
+`imagineer -i in.png -o out.png --apply-operations "rotate90"` <br>
 or <br>
-`sic -i in.png -o out.png --rotate90`
+`imagineer -i in.png -o out.png --rotate90`
 
 **rotate 180 degree** example: <br>
-`sic -i in.png -o out.png --apply-operations "rotate180"` <br>
+`imagineer -i in.png -o out.png --apply-operations "rotate180"` <br>
 or <br>
-`sic -i in.png -o out.png --rotate180`
+`imagineer -i in.png -o out.png --rotate180`
 
 **rotate 270 degree** example: <br>
-`sic -i in.png -o out.png --apply-operations "rotate270"` <br>
+`imagineer -i in.png -o out.png --apply-operations "rotate270"` <br>
 or <br>
-`sic -i in.png -o out.png --rotate270`
+`imagineer -i in.png -o out.png --rotate270`
 
 **threshold** example: <br>
-`sic -i in.png -o out.png --apply-operations "threshold"` <br>
+`imagineer -i in.png -o out.png --apply-operations "threshold"` <br>
 or <br>
-`sic -i in.png -o out.png --threshold`
+`imagineer -i in.png -o out.png --threshold`
 
 **unsharpen** example: <br>
-`sic -i in.png -o out.png --apply-operations "unsharpen -0.7 1"` <br>
+`imagineer -i in.png -o out.png --apply-operations "unsharpen -0.7 1"` <br>
 or <br>
-`sic -i in.png -o out.png --unsharpen -0.7 1`
+`imagineer -i in.png -o out.png --unsharpen -0.7 1`
 
 **vertical gradient** example: <br>
-`sic -i in.png -o out.png --apply-operations "vertical-gradient rgba(255, 0, 0, 255) rgba(0, 0, 255, 255)"` <br>
+`imagineer -i in.png -o out.png --apply-operations "vertical-gradient rgba(255, 0, 0, 255) rgba(0, 0, 255, 255)"` <br>
 or <br>
-`sic -i in.png -o out.png --vertical-gradient "rgba(255, 0, 0, 255)" "rgba(0, 0, 255, 255)"`
+`imagineer -i in.png -o out.png --vertical-gradient "rgba(255, 0, 0, 255)" "rgba(0, 0, 255, 255)"`
 
 
 example with *multiple* image operations which are applied from left-to-right: <br>
-`sic -i in.png -o out.png --apply-operations "rotate180; flip-horizontal; set sampling-filter nearest; resize 75 80; hue-rotate 75"` <br>
+`imagineer -i in.png -o out.png --apply-operations "rotate180; flip-horizontal; set sampling-filter nearest; resize 75 80; hue-rotate 75"` <br>
 or <br>
-`sic -i in.png -o out.png --rotate180 --flip-horizontal --sampling-filter nearest --resize 75 80 --hue-rotate 75`
+`imagineer -i in.png -o out.png --rotate180 --flip-horizontal --sampling-filter nearest --resize 75 80 --hue-rotate 75`
 
 
 <br>
 
 **Other resources on image operations**
 
-For additional information on available options and flags, run `sic --help`.
+For additional information on available options and flags, run `imagineer --help`.
 
 ### License
  
