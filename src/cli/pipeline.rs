@@ -61,7 +61,7 @@ pub fn run_with_devices<'c>(
 fn warn_default_std_output_format() {
     eprintln!(
         "warn: The default output format when using stdout output (the current output mode) is \
-             BMP. Other formats can be use by providing --output-format <FORMAT>."
+             BMP. Other formats can be used by providing --output-format <FORMAT>."
     );
 }
 
