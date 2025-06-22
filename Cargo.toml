@@ -46,6 +46,10 @@ nasm = ["sic_core/nasm"]
 
 output-test-images = []
 
+[[bin]]
+name = "ig"
+path = "src/main.rs"
+
 [profile.release]
 panic = "abort"
 lto = true
