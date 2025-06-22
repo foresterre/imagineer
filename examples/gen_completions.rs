@@ -11,7 +11,7 @@ use std::str::FromStr;
 fn main() {
     let mut cli = create_app(VERSION, ABOUT, HELP_OPERATIONS_AVAILABLE);
 
-    let program_name = option_env!("SIC_COMPLETIONS_APP_NAME").unwrap_or("imagineer");
+    let program_name = option_env!("SIC_COMPLETIONS_APP_NAME").unwrap_or("ig");
 
     let out = option_env!("SIC_COMPLETIONS_OUT_DIR")
         .map(From::from)
