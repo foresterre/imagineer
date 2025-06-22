@@ -9,6 +9,10 @@ In the changelog below, you may find the notable changes to [imagineer](https://
 
 ## Unreleased
 
+### Changed
+
+- Binary name is now 'ig' instead of 'imagineer'
+
 ## 0.23.0 - 2025-04-27
 
 ### Changed
