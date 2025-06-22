@@ -1,6 +1,6 @@
 [package]
 name = "imagineer"
-version = "0.23.0"
+version = "0.24.0"
 authors = ["Martijn Gribnau <garm@ilumeo.com>"]
 description = "Accessible image processing and conversion from the terminal (and a front-end for the 'image' crate). Formerly 'sic'"
 license = "MIT OR Apache-2.0"
@@ -45,6 +45,10 @@ default = ["nasm"]
 nasm = ["sic_core/nasm"]
 
 output-test-images = []
+
+[[bin]]
+name = "ig"
+path = "src/main.rs"
 
 [profile.release]
 panic = "abort"

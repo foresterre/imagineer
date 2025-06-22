@@ -1,19 +1,24 @@
-sic is an image crate[1], CLI front-end. It allows you to manipulate images using image operations and convert images between various formats. Both static and animated images are supported.
+imagineer is a CLI frontend for the image [1] and imageproc [2] crates. Imagineer can be used to manipulate images using image operations for static and animated images, and can decode and encode images to a wide variety of formats.
 
 Formats
 -------
 
-sic can decode the following image formats:
+Decode:
 * AVIF, BMP, GIF, DDS, Farbfeld, ICO, JPEG, OpenExr, PNG, PAM, PBM, PGM, PPM, TGA, TIFF and WebP
 
-sic can encode images into the following formats:
+Encode:
 * AVIF, BMP, Farbfeld, GIF, ICO, JPEG, OpenExr, PNG, PNM (PAM, PBM, PGM and PPM), QOI TGA, TIFF and WebP.
+
+Usage
+-----
+
+Basic usage: `ig --input example.png --output converted.avif` (more at: `ig --help`)
 
 Batch processing
 ----------------
 
-By default, sic's input and output arguments expect a single input and output image.
-You may however replace --input and --output by respectively --glob-input and --glob-output to batch process images matching the glob pattern given to --glob-input.
+To batch process a collection of images, replace `--input` and `--output` by respectively `--glob-input` and `--glob-output`.
+The arguments provided to these options should be a valid glob pattern.
 You may need to provide quotation marks around the pattern, so your shell will not superfluously expand it.
 The --glob-output argument expects an output folder instead of a file path, and the file structure from the first common folder of
 the matching input image paths will be mirrored to the output directory.
@@ -21,12 +26,12 @@ the matching input image paths will be mirrored to the output directory.
 A thank you and request
 -----------------------
 
-We would like to explicitly state that the sic authors are not affiliated with the image crate authors.
-We do like to thank them for creating and maintaining an amazing set of libraries however!
+We would like to explicitly state that the imagineer authors are not affiliated with the authors of the image and imageproc crates.
+We do want to thank them for developing so many high quality libraries!
 
-If you run into an issue caused by the sic program, please report them to us by creating an issue here:
+If you run into an issue caused by the imagineer program, please report them to us directly by creating an issue (other contributions or friendly feedback is also appreciated):
 
-* https://github.com/foresterre/sic/issues
+- https://github.com/foresterre/imagineer/issues
 
 Thank you in advance!
 
@@ -34,3 +39,4 @@ References
 ----------
 
 [1] https://github.com/image-rs/image
+[2] https://github.com/image-rs/imageproc

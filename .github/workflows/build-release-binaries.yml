@@ -2,7 +2,7 @@ name: "ci-build-release-binaries"
 
 on:
   release:
-    types: [created]
+    types: [ created ]
 
 jobs:
   build_binaries:
@@ -25,7 +25,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: checkout_tagged_commit
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.release.target_commitish }}
 
@@ -57,7 +57,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: install_nasm
-        if:  matrix.target != 'x86_64-pc-windows-msvc'
+        if: matrix.target != 'x86_64-pc-windows-msvc'
         uses: ilammy/setup-nasm@v1
 
       - name: install_nasm_msvc
@@ -90,21 +90,21 @@ jobs:
         if: matrix.os == 'macos-latest'
         shell: bash
         run: |
-          cp  ./target/${{ matrix.target }}/release/imagineer ${{ steps.set_output.outputs.subfolder }}
+          cp  ./target/${{ matrix.target }}/release/ig ${{ steps.set_output.outputs.subfolder }}
           gtar --create --gzip --file=${{ steps.set_output.outputs.archive }} ${{ steps.set_output.outputs.subfolder }}
 
       - name: pack_archive_linux
         if: matrix.os == 'ubuntu-latest'
         shell: bash
         run: |
-          cp target/${{ matrix.target }}/release/imagineer ${{ steps.set_output.outputs.subfolder }}
+          cp target/${{ matrix.target }}/release/ig ${{ steps.set_output.outputs.subfolder }}
           tar --create --gzip --file=${{ steps.set_output.outputs.archive }} ${{ steps.set_output.outputs.subfolder }}
 
       - name: pack_archive_windows
         if: matrix.os == 'windows-latest'
         shell: bash
         run: |
-          cp target/${{ matrix.target }}/release/imagineer.exe ./${{ steps.set_output.outputs.subfolder }}
+          cp target/${{ matrix.target }}/release/ig.exe ./${{ steps.set_output.outputs.subfolder }}
           7z a -tzip ${{ steps.set_output.outputs.archive }} ${{ steps.set_output.outputs.subfolder }}
 
       - name: upload_artifact

@@ -1,8 +1,8 @@
 Images may be manipulated by performing image operations.
-You can instruct sic to perform image operations by means of the image script or by specifying image operations directly
+You can instruct imagineer to perform image operations by means of the image script or by specifying image operations directly
 through the CLI interface.
 
-Image script can used by providing commands to --apply-operations "<commands>", or by loading a script from a file using --operations-script.
+Image script can be used by providing commands to --apply-operations "<commands>", or by loading a script from a file using --operations-script.
 Please refer to the --help page if you want to use operations from the CLI instead.
 
 Image operations are always applied from left-to-right.
@@ -82,10 +82,10 @@ The available image operation modifiers are:
 Examples: image script
 ----------------------
 
-Example 1: sic --input input.png --output output.png --apply-operations "invert; hue-rotate -75; rotate90; contrast 0.25"
-Example 2: sic -i input.png -o output.png --apply-operations "set preserve-aspect-ratio true; set sampling-filter lanczos3; resize 250 250;"
-Example 3: sic -i in.png -o out.png --apply-operations "rotate180; flip-horizontal; set sampling-filter nearest; resize 75 80; huerotate 75"
-Example 4: sic -i in.png -o out.png --apply-operations "draw-text 'we can draw text <3' coord(10, 10) rgba(200, 10, 40, 255) size(14) font('resources/font/Lato-Regular.ttf')"
+Example 1: ig --input input.png --output output.png --apply-operations "invert; hue-rotate -75; rotate90; contrast 0.25"
+Example 2: ig -i input.png -o output.png --apply-operations "set preserve-aspect-ratio true; set sampling-filter lanczos3; resize 250 250;"
+Example 3: ig -i in.png -o out.png --apply-operations "rotate180; flip-horizontal; set sampling-filter nearest; resize 75 80; huerotate 75"
+Example 4: ig -i in.png -o out.png --apply-operations "draw-text 'we can draw text <3' coord(10, 10) rgba(200, 10, 40, 255) size(14) font('resources/font/Lato-Regular.ttf')"
 
 
 Examples: cli ops mode
@@ -93,10 +93,10 @@ Examples: cli ops mode
 
 If we modify the above examples to use the cli instead, we will get the following:
 
-Example 1: sic --input input.png --output output.png --invert --hue-rotate -75 --rotate90 --contrast 0.25
-Example 2: sic -i input.png -o output.png --preserve-aspect-ratio true --sampling-filter lanczos3 --resize 250 250
-Example 3: sic -i in.png -o out.png --rotate180 --flip-horizontal --sampling-filter nearest --resize 75 80 --hue-rotate 75"
-Example 3: sic -i in.png -o out.png --draw-text "we can draw text <3" "coord(10, 10)" "rgba(200, 10, 40, 255)" "size(14)" "font('Lato-Regular.ttf')"
+Example 1: ig --input input.png --output output.png --invert --hue-rotate -75 --rotate90 --contrast 0.25
+Example 2: ig -i input.png -o output.png --preserve-aspect-ratio true --sampling-filter lanczos3 --resize 250 250
+Example 3: ig -i in.png -o out.png --rotate180 --flip-horizontal --sampling-filter nearest --resize 75 80 --hue-rotate 75"
+Example 3: ig -i in.png -o out.png --draw-text "we can draw text <3" "coord(10, 10)" "rgba(200, 10, 40, 255)" "size(14)" "font('Lato-Regular.ttf')"
 
 
 ---
