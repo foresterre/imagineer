@@ -13,7 +13,7 @@ rust-version = "1.86"
 [dependencies]
 image = { version = "0.25.6", features = ["rayon"] }
 imageproc = { version = "0.25.0" }
-ab_glyph = { version = "0.2.29" }
+ab_glyph = { version = "0.2.31" }
 thiserror = { workspace = true }
 
 [features]
