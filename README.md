@@ -27,6 +27,10 @@ Basic usage: `ig --input example.png --output converted.avif` (more at: `ig --he
 
 * run `cargo install imagineer`
 
+#### Install with [Homebrew](https://brew.sh):
+
+* `brew install imagineer`
+
 #### Pre-build binaries
 
 * download from [releases](https://github.com/foresterre/imagineer/releases).
