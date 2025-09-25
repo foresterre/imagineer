@@ -4,6 +4,7 @@ use sic_core::image;
 
 pub mod gif;
 pub mod jpeg;
+pub mod pnm;
 
 pub struct EncodeSettings {
     pub pnm_sample_encoding: image::codecs::pnm::SampleEncoding,
