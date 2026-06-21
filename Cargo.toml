@@ -76,6 +76,8 @@ sic_parser = { version = "0.23.0", path = "crates/sic_parser" }
 sic_testing = { version = "0.23.0", path = "crates/sic_testing" }
 
 # common dependencies
+strum = "0.28.0"
+strum_macros = "0.28.0"
 thiserror = "2"
 
 # common dev-dependencies
