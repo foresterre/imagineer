@@ -5,8 +5,8 @@ use std::path::{Path, PathBuf};
 // re-export parameterized macro's
 pub use parameterized::ide;
 pub use parameterized::parameterized as pm;
-use sic_core::SicImage;
 use sic_core::image::GenericImageView;
+use sic_core::SicImage;
 
 // just enough, absolute tolerance, floating point comparison.
 #[macro_export]
@@ -89,7 +89,7 @@ pub trait SicImageDirectAccess {
         self.as_ref().dimensions()
     }
 
-    fn pixels<I: GenericImageView>(&self) -> sic_core::image::Pixels<I>
+    fn pixels<I: GenericImageView>(&self) -> sic_core::image::Pixels<'_, I>
     where
         Self: AsRef<I>,
     {
