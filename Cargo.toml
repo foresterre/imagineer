@@ -17,7 +17,7 @@ keywords = ["image", "converter", "cli", "front-end", "image-cli"]
 categories = ["multimedia::images", "command-line-utilities"]
 
 edition = "2024"
-rust-version = "1.87"
+rust-version.workspace = true
 
 [package.metadata.release]
 tag-prefix = ""
@@ -65,6 +65,9 @@ members = [
     "crates/sic_parser",
     "crates/sic_testing",
 ]
+
+[workspace.package]
+rust-version = "1.89"
 
 [workspace.dependencies]
 # internal crates
