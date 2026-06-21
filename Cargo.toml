@@ -17,7 +17,7 @@ keywords = ["image", "converter", "cli", "front-end", "image-cli"]
 categories = ["multimedia::images", "command-line-utilities"]
 
 edition = "2024"
-rust-version = "1.86"
+rust-version = "1.87"
 
 [package.metadata.release]
 tag-prefix = ""

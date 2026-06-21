@@ -16,6 +16,10 @@ impl Unsharpen {
 
 impl ImageOperation for Unsharpen {
     fn apply_operation(&self, image: &mut SicImage) -> Result<(), SicImageEngineError> {
+        if self.sigma <= 0.0 {
+            return Err(SicImageEngineError::BlurSigmaNotPositive(self.sigma));
+        }
+
         match image {
             SicImage::Static(image) => *image = image.unsharpen(self.sigma, self.threshold),
             SicImage::Animated(image) => {

@@ -25,6 +25,9 @@ pub enum SicImageEngineError {
     #[error("Filter type '{0}' not found")]
     UnknownFilterType(String),
 
+    #[error("Unable to blur; the blur sigma should be a positive value, but was '{0}'")]
+    BlurSigmaNotPositive(f32),
+
     #[error("Unable to load font: '{0}'")]
     FontError(sic_core::ab_glyph::InvalidFont),
 

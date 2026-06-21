@@ -8,7 +8,7 @@ repository = "https://github.com/foresterre/sic"
 readme = "../../README.md"
 
 edition = "2024"
-rust-version = "1.86"
+rust-version = "1.87"
 
 [dependencies]
 sic_core = { workspace = true }

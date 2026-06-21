@@ -37,7 +37,7 @@ impl Preprocess for ColorTypePreprocessor {
                 DynamicImageFormat::Jpeg => Ok(to_rgb8(image)),
                 DynamicImageFormat::Gif => Ok(to_rgba8(image)),
                 DynamicImageFormat::Pnm { subtype } => match subtype {
-                    PnmSubtype::Bitmap(_) => Ok(to_l8(image)),
+                    PnmSubtype::Bitmap(_) => Ok(to_l1(image)),
                     PnmSubtype::Graymap(_) => Ok(to_l8(image)),
                     PnmSubtype::Pixmap(_) => Ok(to_rgb8(image)),
                     _ => Ok(SicImage::Static(image)),
@@ -71,6 +71,16 @@ impl ColorTypeAdjustment {
     pub fn is_enabled(&self) -> bool {
         matches!(self, Self::Enabled)
     }
+}
+
+fn to_l1(image: DynamicImage) -> SicImage {
+    let mut luma = image.to_luma8();
+
+    for pixel in luma.pixels_mut() {
+        pixel.0[0] = if pixel.0[0] >= 128 { 0 } else { 1 };
+    }
+
+    SicImage::Static(DynamicImage::ImageLuma8(luma))
 }
 
 fn to_l8(image: DynamicImage) -> SicImage {

@@ -66,7 +66,7 @@ mod blur {
 
         let result = process.wait();
         assert!(result.is_ok());
-        assert!(result.unwrap().success());
+        assert_not!(result.unwrap().success());
     }
 }
 

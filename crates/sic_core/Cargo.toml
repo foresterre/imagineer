@@ -8,11 +8,11 @@ repository = "https://github.com/foresterre/sic"
 readme = "../../README.md"
 
 edition = "2024"
-rust-version = "1.86"
+rust-version = "1.87"
 
 [dependencies]
-image = { version = "0.25.6", features = ["rayon"] }
-imageproc = { version = "0.25.0" }
+image = { version = "0.25.10", features = ["rayon"] }
+imageproc = { version = "0.27.0" }
 ab_glyph = { version = "0.2.32" }
 thiserror = { workspace = true }
 
