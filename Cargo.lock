@@ -186,7 +186,7 @@ dependencies = [
  "num-traits",
  "pastey",
  "rayon",
- "thiserror",
+ "thiserror 2.0.17",
  "v_frame",
  "y4m",
 ]
@@ -358,6 +358,15 @@ name = "colorchoice"
 version = "1.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1d07550c9036bf2ae0c684c4297d503f838287c83c53686d05370d0e139ae570"
+
+[[package]]
+name = "commondir"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ab552acb7c0a751c75c3dd4f9b95d31ed85c985ce5c70232a2952ffbe7ecfda5"
+dependencies = [
+ "thiserror 1.0.69",
+]
 
 [[package]]
 name = "cpufeatures"
@@ -720,6 +729,7 @@ dependencies = [
  "atty",
  "clap",
  "clap_complete",
+ "commondir",
  "globwalk",
  "open",
  "parameterized",
@@ -1129,7 +1139,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8b7cafe60d6cf8e62e1b9b2ea516a089c008945bb5a275416789e7db0bc199dc"
 dependencies = [
  "memchr",
- "thiserror",
+ "thiserror 2.0.17",
  "ucd-trie",
 ]
 
@@ -1356,7 +1366,7 @@ dependencies = [
  "rand 0.9.4",
  "rand_chacha",
  "simd_helpers",
- "thiserror",
+ "thiserror 2.0.17",
  "v_frame",
  "wasm-bindgen",
 ]
@@ -1523,7 +1533,7 @@ dependencies = [
  "sic_testing",
  "strum",
  "strum_macros",
- "thiserror",
+ "thiserror 2.0.17",
 ]
 
 [[package]]
@@ -1533,7 +1543,7 @@ dependencies = [
  "ab_glyph",
  "image",
  "imageproc",
- "thiserror",
+ "thiserror 2.0.17",
 ]
 
 [[package]]
@@ -1546,7 +1556,7 @@ dependencies = [
  "sic_testing",
  "strum",
  "strum_macros",
- "thiserror",
+ "thiserror 2.0.17",
 ]
 
 [[package]]
@@ -1556,7 +1566,7 @@ dependencies = [
  "parameterized",
  "sic_core",
  "sic_testing",
- "thiserror",
+ "thiserror 2.0.17",
 ]
 
 [[package]]
@@ -1569,7 +1579,7 @@ dependencies = [
  "sic_core",
  "sic_image_engine",
  "sic_testing",
- "thiserror",
+ "thiserror 2.0.17",
 ]
 
 [[package]]
@@ -1662,11 +1672,31 @@ dependencies = [
 
 [[package]]
 name = "thiserror"
+version = "1.0.69"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b6aaf5339b578ea85b50e080feb250a3e8ae8cfcdff9a461c9ec2904bc923f52"
+dependencies = [
+ "thiserror-impl 1.0.69",
+]
+
+[[package]]
+name = "thiserror"
 version = "2.0.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f63587ca0f12b72a0600bcba1d40081f830876000bb46dd2337a3051618f4fc8"
 dependencies = [
- "thiserror-impl",
+ "thiserror-impl 2.0.17",
+]
+
+[[package]]
+name = "thiserror-impl"
+version = "1.0.69"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4fee6c4efc90059e10f81e6d42c60a18f76588c3d74cb83a0b242a2b6c7504c1"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
