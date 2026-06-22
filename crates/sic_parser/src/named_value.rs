@@ -259,13 +259,13 @@ struct AnnotatedArgs<'a> {
     arguments: Vec<Value<'a>>,
 }
 
-impl AnnotatedArgs<'_> {
+impl<'a> AnnotatedArgs<'a> {
     fn ident(&self) -> Ident {
         self.ident
     }
 
     // moves arguments!
-    fn arguments(&self) -> &[Value] {
+    fn arguments(&self) -> &[Value<'a>] {
         self.arguments.as_slice()
     }
 }

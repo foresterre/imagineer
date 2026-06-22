@@ -7,15 +7,15 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/foresterre/sic"
 readme = "../../README.md"
 
-edition = "2024"
-rust-version = "1.86"
+edition.workspace = true
+rust-version.workspace = true
 
 [dependencies]
 sic_core = { workspace = true }
 sic_io = { workspace = true }
 
-strum = "0.27.2"
-strum_macros = "0.27.2"
+strum = { workspace = true }
+strum_macros = { workspace = true }
 thiserror = { workspace = true }
 rayon = "1.11.0"
 

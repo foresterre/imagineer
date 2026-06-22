@@ -89,7 +89,7 @@ pub trait SicImageDirectAccess {
         self.as_ref().dimensions()
     }
 
-    fn pixels<I: GenericImageView>(&self) -> sic_core::image::Pixels<I>
+    fn pixels<I: GenericImageView>(&self) -> sic_core::image::Pixels<'_, I>
     where
         Self: AsRef<I>,
     {

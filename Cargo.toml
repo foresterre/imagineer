@@ -17,7 +17,7 @@ keywords = ["image", "converter", "cli", "front-end", "image-cli"]
 categories = ["multimedia::images", "command-line-utilities"]
 
 edition = "2024"
-rust-version = "1.86"
+rust-version.workspace = true
 
 [package.metadata.release]
 tag-prefix = ""
@@ -66,6 +66,10 @@ members = [
     "crates/sic_testing",
 ]
 
+[workspace.package]
+edition = "2024"
+rust-version = "1.89"
+
 [workspace.dependencies]
 # internal crates
 sic_cli_ops = { version = "0.23.0", path = "crates/sic_cli_ops" }
@@ -76,6 +80,8 @@ sic_parser = { version = "0.23.0", path = "crates/sic_parser" }
 sic_testing = { version = "0.23.0", path = "crates/sic_testing" }
 
 # common dependencies
+strum = "0.28.0"
+strum_macros = "0.28.0"
 thiserror = "2"
 
 # common dev-dependencies

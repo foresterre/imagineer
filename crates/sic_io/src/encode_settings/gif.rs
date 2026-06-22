@@ -1,9 +1,10 @@
 use crate::errors::{FormatError, SicIoError};
 use sic_core::image;
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Default)]
 pub enum RepeatAnimation {
     Finite(u16),
+    #[default]
     Infinite,
     Never,
 }
@@ -18,12 +19,6 @@ impl RepeatAnimation {
                 .map(Self::Finite)
                 .map_err(|_| SicIoError::FormatError(FormatError::GIFRepeatInvalidValue)),
         }
-    }
-}
-
-impl Default for RepeatAnimation {
-    fn default() -> Self {
-        Self::Infinite
     }
 }
 

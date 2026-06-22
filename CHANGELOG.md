@@ -9,6 +9,11 @@ In the changelog below, you may find the notable changes to [imagineer](https://
 
 ## Unreleased
 
+### Notable dependency updates
+
+- Updated [image](https://github.com/image-rs/image) to 0.24.10
+- Updated [image](https://github.com/image-rs/imageproc) to 0.27.0
+
 ## 0.24.0 - 2025-06-22
 
 ### Changed

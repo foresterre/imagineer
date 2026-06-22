@@ -15,6 +15,10 @@ impl Blur {
 
 impl ImageOperation for Blur {
     fn apply_operation(&self, image: &mut SicImage) -> Result<(), SicImageEngineError> {
+        if self.sigma <= 0.0 {
+            return Err(SicImageEngineError::BlurSigmaNotPositive(self.sigma));
+        }
+
         match image {
             SicImage::Static(image) => *image = image.blur(self.sigma),
             SicImage::Animated(image) => blur_animated_image(image.frames_mut(), self.sigma),

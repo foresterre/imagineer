@@ -1270,22 +1270,12 @@ mod tests {
     #[test]
     fn test_unsharpen_neg() {
         let img = setup_default_test_image();
-        let cmp = setup_default_test_image();
 
         let operation = ImgOp::Unsharpen((-20.1, -20));
 
         let operator = ImageEngine::new(img);
         let done = operator.ignite(&[Instr::Operation(operation)]);
-        assert!(done.is_ok());
-
-        let result_img = done.unwrap();
-
-        assert_ne!(cmp.raw_pixels(), result_img.raw_pixels());
-
-        output_test_image_for_manual_inspection(
-            &result_img,
-            out_!("test_unsharpen_neg20_1_neg20.png"),
-        );
+        assert!(done.is_err());
     }
 
     #[test]

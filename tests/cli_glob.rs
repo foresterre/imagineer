@@ -45,12 +45,11 @@ fn count_files_with_ext_in_folder<P: AsRef<Path>, S: AsRef<OsStr>>(path: P, ext:
     std::fs::read_dir(path)
         .unwrap()
         .filter_map(|entry| {
-            if let Ok(entry) = entry {
-                if let Some(found_ext) = entry.path().extension() {
-                    if found_ext == ext.as_ref() {
-                        return Some(found_ext.to_os_string());
-                    }
-                }
+            if let Ok(entry) = entry
+                && let Some(found_ext) = entry.path().extension()
+                && found_ext == ext.as_ref()
+            {
+                return Some(found_ext.to_os_string());
             }
             None
         })
