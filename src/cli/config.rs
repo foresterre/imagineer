@@ -1,10 +1,10 @@
 use crate::cli::app::arg_names::{
     ARG_GLOB_NO_SKIP_UNSUPPORTED_EXTENSIONS, ARG_INPUT, ARG_INPUT_GLOB, ARG_OUTPUT, ARG_OUTPUT_GLOB,
 };
-use crate::cli::common_dir::CommonDir;
 use crate::cli::glob_base_dir::glob_builder_base;
 use anyhow::{Context, bail};
 use clap::ArgMatches;
+use commondir::CommonDir;
 use globwalk::{FileType, GlobWalker};
 use sic_core::image;
 use sic_image_engine::engine::Instr;
