@@ -72,10 +72,10 @@ mod tests {
     #[allow(clippy::vec_init_then_push)]
     mod individual_args {
         use super::*;
+        use sic_image_engine::ImgOp;
         use sic_image_engine::engine::EnvItem;
         use sic_image_engine::wrapper::filter_type::FilterTypeWrap;
         use sic_image_engine::wrapper::image_path::ImageFromPath;
-        use sic_image_engine::ImgOp;
         use sic_testing::setup_test_image;
 
         macro_rules! op {
