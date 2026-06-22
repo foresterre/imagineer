@@ -53,21 +53,21 @@ impl InputOutputMode {
 
         match mode {
             InputOutputModeType::Simple => Ok(InputOutputMode::Single {
-                input: match matches.value_of(ARG_INPUT) {
+                input: match matches.get_one::<String>(ARG_INPUT) {
                     Some(p) => PathVariant::Path(p.into()),
                     None => PathVariant::StdStream,
                 },
-                output: match matches.value_of(ARG_OUTPUT) {
+                output: match matches.get_one::<String>(ARG_OUTPUT) {
                     Some(p) => PathVariant::Path(p.into()),
                     None => PathVariant::StdStream,
                 },
             }),
             InputOutputModeType::Batch => {
                 let inputs = matches
-                    .value_of(ARG_INPUT_GLOB)
+                    .get_one::<String>(ARG_INPUT_GLOB)
                     .with_context(|| "Glob mode requires an input pattern")?;
                 let output = matches
-                    .value_of(ARG_OUTPUT_GLOB)
+                    .get_one::<String>(ARG_OUTPUT_GLOB)
                     .with_context(|| "Glob mode requires an output folder")?;
 
                 Ok(InputOutputMode::Batch {
@@ -76,7 +76,7 @@ impl InputOutputMode {
 
                         let paths = Self::lookup_paths(
                             inputs,
-                            !matches.is_present(ARG_GLOB_NO_SKIP_UNSUPPORTED_EXTENSIONS),
+                            !matches.get_flag(ARG_GLOB_NO_SKIP_UNSUPPORTED_EXTENSIONS),
                         )?;
 
                         CommonDir::try_new(paths)?
@@ -145,7 +145,7 @@ pub enum InputOutputModeType {
 
 impl InputOutputModeType {
     pub fn from_arg_matches(matches: &ArgMatches) -> InputOutputModeType {
-        if matches.is_present(ARG_INPUT_GLOB) {
+        if matches.contains_id(ARG_INPUT_GLOB) {
             InputOutputModeType::Batch
         } else {
             InputOutputModeType::Simple

@@ -5,8 +5,8 @@ const HELP_OPERATIONS_AVAILABLE: &str =
     include_str!("../resources/help-pages/image_operations.txt");
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
+use clap_complete::{Shell, generate_to};
 use imagineer::cli::app::create_app;
-use std::str::FromStr;
 
 fn main() {
     let mut cli = create_app(VERSION, ABOUT, HELP_OPERATIONS_AVAILABLE);
@@ -24,13 +24,15 @@ fn main() {
 
     println!("using output folder '{}'", out.to_string_lossy());
 
-    for variant in clap::Shell::variants().iter() {
-        cli.gen_completions(
-            program_name,
-            clap::Shell::from_str(variant)
-                .unwrap_or_else(|_| panic!("Could not generate completions for shell {}", variant)),
-            &out,
-        );
-        println!("generated completions for: {}", variant);
+    for shell in [
+        Shell::Bash,
+        Shell::Zsh,
+        Shell::Fish,
+        Shell::PowerShell,
+        Shell::Elvish,
+    ] {
+        generate_to(shell, &mut cli, program_name, &out)
+            .unwrap_or_else(|_| panic!("Could not generate completions for shell {}", shell));
+        println!("generated completions for: {}", shell);
     }
 }

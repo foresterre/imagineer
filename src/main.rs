@@ -18,7 +18,7 @@ fn main() -> anyhow::Result<()> {
     let app = app::create_app(VERSION, ABOUT, HELP_OPERATIONS_AVAILABLE);
     let matches = app.get_matches();
 
-    let license_display = matches.is_present(ARG_LICENSE) || matches.is_present(ARG_DEP_LICENSES);
+    let license_display = matches.get_flag(ARG_LICENSE) || matches.get_flag(ARG_DEP_LICENSES);
 
     let configuration = build_app_config(&matches)?;
 
