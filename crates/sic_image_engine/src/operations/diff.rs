@@ -18,9 +18,13 @@ impl<'image> Diff<'image> {
 }
 
 impl ImageOperation for Diff<'_> {
+    fn apply_to_frame(&self, image: &mut DynamicImage) -> Result<(), SicImageEngineError> {
+        diff_impl(image, self.path)
+    }
+
     fn apply_operation(&self, image: &mut SicImage) -> Result<(), SicImageEngineError> {
         match image {
-            SicImage::Static(image) => diff_impl(image, self.path),
+            SicImage::Static(image) => self.apply_to_frame(image),
             SicImage::Animated(image) => diff_animated_image(image.frames_mut(), self.path),
         }
     }

@@ -1,7 +1,6 @@
 use crate::errors::SicImageEngineError;
 use crate::operations::ImageOperation;
-use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
-use sic_core::{SicImage, image};
+use sic_core::image::DynamicImage;
 
 pub struct Blur {
     sigma: f32,
@@ -14,22 +13,13 @@ impl Blur {
 }
 
 impl ImageOperation for Blur {
-    fn apply_operation(&self, image: &mut SicImage) -> Result<(), SicImageEngineError> {
+    fn apply_to_frame(&self, image: &mut DynamicImage) -> Result<(), SicImageEngineError> {
         if self.sigma <= 0.0 {
             return Err(SicImageEngineError::BlurSigmaNotPositive(self.sigma));
         }
 
-        match image {
-            SicImage::Static(image) => *image = image.blur(self.sigma),
-            SicImage::Animated(image) => blur_animated_image(image.frames_mut(), self.sigma),
-        }
+        *image = image.blur(self.sigma);
 
         Ok(())
     }
-}
-
-fn blur_animated_image(frames: &mut [image::Frame], sigma: f32) {
-    frames.par_iter_mut().for_each(|frame| {
-        *frame.buffer_mut() = image::imageops::blur(frame.buffer_mut(), sigma);
-    });
 }

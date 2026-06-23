@@ -17,9 +17,13 @@ impl<'overlay> Overlay<'overlay> {
 }
 
 impl ImageOperation for Overlay<'_> {
+    fn apply_to_frame(&self, image: &mut DynamicImage) -> Result<(), SicImageEngineError> {
+        overlay_static(image, self.inputs)
+    }
+
     fn apply_operation(&self, image: &mut SicImage) -> Result<(), SicImageEngineError> {
         match image {
-            SicImage::Static(image) => overlay_static(image, self.inputs),
+            SicImage::Static(image) => self.apply_to_frame(image),
             SicImage::Animated(image) => overlay_animated_image(image.frames_mut(), self.inputs),
         }
     }
