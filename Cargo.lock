@@ -1686,6 +1686,7 @@ name = "sic_core"
 version = "0.23.0"
 dependencies = [
  "ab_glyph",
+ "color_quant",
  "image",
  "imageproc",
  "thiserror 2.0.17",

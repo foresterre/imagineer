@@ -11,9 +11,10 @@ edition.workspace = true
 rust-version.workspace = true
 
 [dependencies]
-image = { version = "0.25.10", features = ["rayon"] }
+image = { version = "0.25.10", features = ["rayon", "color_quant"] }
 imageproc = { version = "0.27.0" }
 ab_glyph = { version = "0.2.32" }
+color_quant = "1.1.0" # nb: image depends on ^1, while ^2 is also available
 thiserror = { workspace = true }
 
 [features]
