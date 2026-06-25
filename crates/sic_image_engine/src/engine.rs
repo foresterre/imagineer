@@ -122,8 +122,8 @@ impl ImageEngine {
             }
             ImgOp::Diff(path) => operations::diff::Diff::new(path).apply_operation(&mut self.image),
             ImgOp::Dither => operations::dither::Dither::new().apply_operation(&mut self.image),
-            ImgOp::DitherColor((colors, sample_factor)) => {
-                operations::dither_color::DitherColor::new(*colors, *sample_factor)
+            ImgOp::DitherQuant((colors, sample_factor)) => {
+                operations::dither_quant::DitherQuant::new(*colors, *sample_factor)
                     .apply_operation(&mut self.image)
             }
             ImgOp::DrawText(inner) => {
@@ -1327,11 +1327,11 @@ mod tests {
     }
 
     #[test]
-    fn test_dither_color() {
+    fn test_dither_quant() {
         let img = setup_default_test_image();
         let cmp = setup_default_test_image();
 
-        let operation = ImgOp::DitherColor((64, 10));
+        let operation = ImgOp::DitherQuant((64, 10));
 
         let operator = ImageEngine::new(img);
         let done = operator.ignite(&[Instr::Operation(operation)]);
@@ -1341,34 +1341,34 @@ mod tests {
 
         assert_ne!(cmp.raw_pixels(), result_img.raw_pixels());
 
-        output_test_image_for_manual_inspection(&result_img, out_!("test_dither_color.png"));
+        output_test_image_for_manual_inspection(&result_img, out_!("test_dither_quant.png"));
     }
 
     #[test]
-    fn test_dither_color_colors_out_of_range() {
+    fn test_dither_quant_colors_out_of_range() {
         let img = setup_default_test_image();
 
-        let operation = ImgOp::DitherColor((32, 10));
+        let operation = ImgOp::DitherQuant((32, 10));
 
         let operator = ImageEngine::new(img);
         let done = operator.ignite(&[Instr::Operation(operation)]);
         assert!(matches!(
             done,
-            Err(SicImageEngineError::DitherColorsOutOfRange(32))
+            Err(SicImageEngineError::DitherQuantColorsOutOfRange(32))
         ));
     }
 
     #[test]
-    fn test_dither_color_sample_factor_out_of_range() {
+    fn test_dither_quant_sample_factor_out_of_range() {
         let img = setup_default_test_image();
 
-        let operation = ImgOp::DitherColor((64, 0));
+        let operation = ImgOp::DitherQuant((64, 0));
 
         let operator = ImageEngine::new(img);
         let done = operator.ignite(&[Instr::Operation(operation)]);
         assert!(matches!(
             done,
-            Err(SicImageEngineError::DitherSampleFactorOutOfRange(0))
+            Err(SicImageEngineError::DitherQuantSampleFactorOutOfRange(0))
         ));
     }
 
@@ -1432,7 +1432,9 @@ mod tests {
         let done = operator.ignite(&[Instr::Operation(operation)]);
         assert!(matches!(
             done,
-            Err(SicImageEngineError::IndexColorsQuantSampleFactorOutOfRange(0))
+            Err(SicImageEngineError::IndexColorsQuantSampleFactorOutOfRange(
+                0
+            ))
         ));
     }
 

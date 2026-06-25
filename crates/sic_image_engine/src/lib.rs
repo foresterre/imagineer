@@ -22,7 +22,7 @@ pub enum ImgOp {
     Crop((u32, u32, u32, u32)),
     Diff(ImageFromPath),
     Dither,
-    DitherColor((u32, u32)),
+    DitherQuant((u32, u32)),
     DrawText(DrawTextInner),
     Filter3x3([f32; 9]),
     FlipHorizontal,

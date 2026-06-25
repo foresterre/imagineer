@@ -12,7 +12,7 @@ pub mod contrast;
 pub mod crop;
 pub mod diff;
 pub mod dither;
-pub mod dither_color;
+pub mod dither_quant;
 pub mod draw_text;
 pub mod filter3x3;
 pub mod flip_horizontal;
