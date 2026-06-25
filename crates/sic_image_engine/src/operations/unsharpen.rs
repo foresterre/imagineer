@@ -1,7 +1,6 @@
 use crate::errors::SicImageEngineError;
 use crate::operations::ImageOperation;
-use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
-use sic_core::{SicImage, image};
+use sic_core::image::DynamicImage;
 
 pub struct Unsharpen {
     sigma: f32,
@@ -15,24 +14,13 @@ impl Unsharpen {
 }
 
 impl ImageOperation for Unsharpen {
-    fn apply_operation(&self, image: &mut SicImage) -> Result<(), SicImageEngineError> {
+    fn apply_to_frame(&self, image: &mut DynamicImage) -> Result<(), SicImageEngineError> {
         if self.sigma <= 0.0 {
             return Err(SicImageEngineError::BlurSigmaNotPositive(self.sigma));
         }
 
-        match image {
-            SicImage::Static(image) => *image = image.unsharpen(self.sigma, self.threshold),
-            SicImage::Animated(image) => {
-                unsharpen_animated_image(image.frames_mut(), self.sigma, self.threshold)
-            }
-        }
+        *image = image.unsharpen(self.sigma, self.threshold);
 
         Ok(())
     }
-}
-
-fn unsharpen_animated_image(frames: &mut [image::Frame], sigma: f32, threshold: i32) {
-    frames.par_iter_mut().for_each(|frame| {
-        *frame.buffer_mut() = image::imageops::unsharpen(frame.buffer_mut(), sigma, threshold);
-    });
 }

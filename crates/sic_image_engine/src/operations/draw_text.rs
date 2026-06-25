@@ -16,9 +16,13 @@ impl<'dt> DrawText<'dt> {
 }
 
 impl ImageOperation for DrawText<'_> {
+    fn apply_to_frame(&self, image: &mut DynamicImage) -> Result<(), SicImageEngineError> {
+        draw_text_static_image(image, self.text)
+    }
+
     fn apply_operation(&self, image: &mut SicImage) -> Result<(), SicImageEngineError> {
         match image {
-            SicImage::Static(image) => draw_text_static_image(image, self.text),
+            SicImage::Static(image) => self.apply_to_frame(image),
             SicImage::Animated(image) => draw_text_animated_image(image.frames_mut(), self.text),
         }
     }
