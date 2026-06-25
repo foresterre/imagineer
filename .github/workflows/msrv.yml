@@ -25,8 +25,8 @@ jobs:
       - name: version_of_cargo_msrv
         run: cargo msrv --version
 
-      - name: install_nasm
-        uses: ilammy/setup-nasm@v1
+      - name: setup_dav1d
+        uses: ./.github/actions/setup-dav1d
 
       - name: run_cargo_msrv_verify
         run: cargo msrv verify --output-format json

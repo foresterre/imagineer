@@ -56,27 +56,12 @@ jobs:
       - name: install_rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: install_nasm
-        if: matrix.target != 'x86_64-pc-windows-msvc'
-        uses: ilammy/setup-nasm@v1
-
-      - name: install_nasm_msvc
-        if: matrix.target == 'x86_64-pc-windows-msvc'
-        run: |
-          $NASM_VERSION="2.15.05"
-          $LINK = "https://www.nasm.us/pub/nasm/releasebuilds/$NASM_VERSION/win64"
-          $NASM_FILE = "nasm-$NASM_VERSION-win64"
-          curl --ssl-no-revoke -LO "$LINK/$NASM_FILE.zip"
-          7z e -y "$NASM_FILE.zip" -o"C:\nasm"
-          echo "C:\nasm"  | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          $LinkGlob = "VC\Tools\MSVC\*\bin\Hostx64\x64"
-          $env:PATH = "$env:PATH;${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer"
-          $LinkPath = vswhere -latest -products * -find "$LinkGlob" | Select-Object -Last 1
-          echo "$LinkPath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      - name: setup_dav1d
+        uses: ./.github/actions/setup-dav1d
 
       - name: build_${{ matrix.target }}_release_binary
         shell: bash
-        run: cargo build --target=${{ matrix.target }} --release
+        run: cargo build --target=${{ matrix.target }} --release --features avif-decoder
 
       - name: install_cargo_about
         shell: bash

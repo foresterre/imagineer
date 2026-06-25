@@ -38,8 +38,10 @@ jobs:
         with:
           toolchain: ${{ matrix.rust }}
 
-      - name: install_nasm
-        uses: ilammy/setup-nasm@v1
+      - name: setup_dav1d
+        uses: ./.github/actions/setup-dav1d
+        with:
+          setup-msvc: ${{ matrix.build != 'win-gnu-stable' }} # we don't prebuild libdav1d in the ci on this platform, which is required for the `avif-decoder` optional feature
 
       - name: fetch
         run: cargo fetch --verbose
@@ -57,7 +59,9 @@ jobs:
         run: cargo test --verbose --all --no-default-features
 
       - name: build_(all_features)
+        if: ${{ matrix.build != 'win-gnu-stable' }} # we don't prebuild libdav1d in the ci on this platform
         run: cargo build --verbose --all --all-features
 
       - name: test_all_(all_features)
+        if: ${{ matrix.build != 'win-gnu-stable' }} # we don't prebuild libdav1d in the ci on this platform
         run: cargo test --verbose --all --all-features

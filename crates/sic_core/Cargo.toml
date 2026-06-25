@@ -18,3 +18,4 @@ thiserror = { workspace = true }
 
 [features]
 nasm = ["image/nasm"]
+avif-decoder = ["image/avif-native"] # avif encoder (via ravif) is enabled by default, decoder requires native libdav1d

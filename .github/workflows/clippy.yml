@@ -18,8 +18,8 @@ jobs:
         with:
           components: clippy
 
-      - name: install_nasm
-        uses: ilammy/setup-nasm@v1
+      - name: setup_dav1d
+        uses: ./.github/actions/setup-dav1d
 
       - name: clippy
         run: cargo clippy --all-targets --all-features --workspace
