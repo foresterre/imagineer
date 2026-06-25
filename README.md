@@ -132,6 +132,8 @@ If we use the _cli operations_ method the previously shown example becomes: <br>
 |contrast           | `contrast <fp>`                           | Adjust the contrast of the image. |
 |crop               | `crop <uint> <uint> <uint> <uint>`        | Syntax: `crop <lx> <ly> <rx> <ry>`, where `lx` is top left corner x pixel coordinate starting at 0, `ly` is the top left corner y pixel coordinate starting at 0, `rx` is the  bottom right corner x pixel coordinate and `ry` is the bottom right corner y pixel coordinate. `rx` and `ry` should be larger than `lx` and `ly` respectively. |
 |diff               | `diff <path>`                             | Diff the input image against the argument image to show which pixels are the same (white), different (red) or not part of either image (transparent). |
+|dither             | `dither`                                  | Reduce the image to black and white using Floyd-Steinberg error diffusion. |
+|dither-color       | `dither-color <uint> <uint>`              | Syntax: `dither-color <colors> <sample-factor>`, where `colors` is the number of palette colors (at least 64) and `sample-factor` is the training sample fraction in the range 1 to 30 (1 is best quality and slowest, when in doubt, 10 is a good compromise). Reduce the image to a palette trained on its own pixels (NeuQuant) using Floyd-Steinberg error diffusion. |
 |draw-text ^2       | `draw-text <string> <nv:coord> <nv:rgba> <nv:size> <nv:font>` | Draw text on top of an image (note: alpha-blending is not yet supported).  |
 |filter3x3          | `filter3x3 <fp9x> `                       | Apply a 3 by 3 convolution filter. |
 |flip horizontal    | `flip-horizontal`                         | Flips the image on the horizontal axis. |

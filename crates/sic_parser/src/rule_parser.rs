@@ -37,6 +37,8 @@ pub fn parse_image_operations(pairs: Pairs<'_, Rule>) -> Result<Vec<Instr>, SicP
                     .ok_or(SicParserError::NoInnerString)?,
             ),
 
+            Rule::dither => Ok(Instr::Operation(ImgOp::Dither)),
+            Rule::dither_color => DitherColor(pair),
             Rule::draw_text => Ok(parse_draw_text(pair)?),
             Rule::filter3x3 => Filter3x3(pair),
             Rule::flip_horizontal => Ok(Instr::Operation(ImgOp::FlipHorizontal)),
@@ -93,6 +95,7 @@ parse_op_from_pair!(Brighten, i32);
 parse_op_from_pair!(Contrast, f32);
 parse_op_from_pair!(Crop, (u32, u32, u32, u32));
 parse_op_from_pair!(Diff, ImageFromPath);
+parse_op_from_pair!(DitherColor, (u32, u32));
 parse_op_from_pair!(HueRotate, i32);
 parse_op_from_pair!(Resize, (u32, u32));
 parse_op_from_pair!(Unsharpen, (f32, i32));
@@ -317,6 +320,43 @@ mod tests {
         assert_eq!(
             vec![
                 Instr::Operation(ImgOp::Threshold),
+                Instr::Operation(ImgOp::FlipHorizontal)
+            ],
+            parse_image_operations(pairs).unwrap()
+        );
+    }
+
+    #[test]
+    fn test_parse_dither_only() {
+        let pairs =
+            SICParser::parse(Rule::main, "dither").unwrap_or_else(|e| panic!("error: {:?}", e));
+
+        assert_eq!(
+            vec![Instr::Operation(ImgOp::Dither)],
+            parse_image_operations(pairs).unwrap()
+        );
+    }
+
+    #[test]
+    fn test_parse_dither_color() {
+        let pairs = SICParser::parse(Rule::main, "dither-color 64 10")
+            .unwrap_or_else(|e| panic!("error: {:?}", e));
+
+        assert_eq!(
+            vec![Instr::Operation(ImgOp::DitherColor((64, 10)))],
+            parse_image_operations(pairs).unwrap()
+        );
+    }
+
+    // `dither-color` shares its prefix with `dither`; ensure it is not mis-parsed.
+    #[test]
+    fn test_parse_dither_color_with_flip() {
+        let pairs = SICParser::parse(Rule::main, "dither-color 64 10;flip-horizontal")
+            .unwrap_or_else(|e| panic!("error: {:?}", e));
+
+        assert_eq!(
+            vec![
+                Instr::Operation(ImgOp::DitherColor((64, 10))),
                 Instr::Operation(ImgOp::FlipHorizontal)
             ],
             parse_image_operations(pairs).unwrap()

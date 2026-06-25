@@ -38,6 +38,8 @@ brighten = ${ ^"brighten" ~ WHITESPACE ~ int }
 contrast = ${ ^"contrast" ~ WHITESPACE ~ fp }
 crop = ${ ^"crop" ~ WHITESPACE ~ uint ~ WHITESPACE ~ uint ~ WHITESPACE ~ uint ~ WHITESPACE ~ uint }
 diff = ${ ^"diff" ~ WHITESPACE ~ string_unicode }
+dither = { ^"dither" }
+dither_color = ${ ^"dither-color" ~ WHITESPACE ~ uint ~ WHITESPACE ~ uint }
 filter3x3 = ${ ^"filter3x3" ~ WHITESPACE ~ (f3x3_args_sep | f3x3_args_no_sep) }
 flip_horizontal = { ^"flip-horizontal" }
 flip_vertical = { ^"flip-vertical"  }
@@ -82,6 +84,8 @@ operation = _{
     | contrast
     | crop
     | diff
+    | dither_color
+    | dither
     | draw_text
     | filter3x3
     | flip_horizontal

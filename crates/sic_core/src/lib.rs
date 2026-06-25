@@ -6,7 +6,7 @@
 //! compatibility.
 
 /// The re-export of image ensures all crates use the same version.
-pub use {ab_glyph, image, imageproc};
+pub use {ab_glyph, color_quant, image, imageproc};
 
 use image::DynamicImage;
 use std::convert::TryFrom;

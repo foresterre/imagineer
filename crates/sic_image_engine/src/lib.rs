@@ -21,7 +21,8 @@ pub enum ImgOp {
     Contrast(f32),
     Crop((u32, u32, u32, u32)),
     Diff(ImageFromPath),
-
+    Dither,
+    DitherColor((u32, u32)),
     DrawText(DrawTextInner),
     Filter3x3([f32; 9]),
     FlipHorizontal,
@@ -35,7 +36,6 @@ pub enum ImgOp {
     Rotate90,
     Rotate180,
     Rotate270,
-
     Threshold,
     Unsharpen((f32, i32)),
     VerticalGradient(GradientInput),

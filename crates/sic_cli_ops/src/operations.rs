@@ -22,6 +22,8 @@ pub enum OperationId {
     Contrast,
     Crop,
     Diff,
+    Dither,
+    DitherColor,
     DrawText,
     Filter3x3,
     FlipHorizontal,
@@ -75,6 +77,8 @@ impl OperationId {
             OperationId::Contrast => 1,
             OperationId::Crop => 4,
             OperationId::Diff => 1,
+            OperationId::Dither => 0,
+            OperationId::DitherColor => 2,
             OperationId::DrawText => 5,
             OperationId::Filter3x3 => 9,
             OperationId::FlipHorizontal => 0,
@@ -135,6 +139,10 @@ impl OperationId {
             OperationId::Diff => {
                 Instr::Operation(ImgOp::Diff(parse_inputs_by_type!(inputs, ImageFromPath)?))
             }
+            OperationId::Dither => Instr::Operation(ImgOp::Dither),
+            OperationId::DitherColor => Instr::Operation(ImgOp::DitherColor(
+                parse_inputs_by_type!(inputs, (u32, u32))?,
+            )),
             OperationId::DrawText => {
                 use sic_image_engine::wrapper::draw_text_inner::DrawTextInner;
                 Instr::Operation(ImgOp::DrawText(parse_inputs_by_type!(

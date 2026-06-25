@@ -121,6 +121,11 @@ impl ImageEngine {
                 operations::crop::Crop::new((*lx, *ly), (*rx, *ry)).apply_operation(&mut self.image)
             }
             ImgOp::Diff(path) => operations::diff::Diff::new(path).apply_operation(&mut self.image),
+            ImgOp::Dither => operations::dither::Dither::new().apply_operation(&mut self.image),
+            ImgOp::DitherColor((colors, sample_factor)) => {
+                operations::dither_color::DitherColor::new(*colors, *sample_factor)
+                    .apply_operation(&mut self.image)
+            }
             ImgOp::DrawText(inner) => {
                 operations::draw_text::DrawText::new(inner).apply_operation(&mut self.image)
             }
@@ -1294,6 +1299,70 @@ mod tests {
         assert_ne!(cmp.raw_pixels(), result_img.raw_pixels());
 
         output_test_image_for_manual_inspection(&result_img, out_!("test_threshold.png"));
+    }
+
+    #[test]
+    fn test_dither() {
+        let img = setup_default_test_image();
+        let cmp = setup_default_test_image();
+
+        let operation = ImgOp::Dither;
+
+        let operator = ImageEngine::new(img);
+        let done = operator.ignite(&[Instr::Operation(operation)]);
+        assert!(done.is_ok());
+
+        let result_img = done.unwrap();
+
+        assert_ne!(cmp.raw_pixels(), result_img.raw_pixels());
+
+        output_test_image_for_manual_inspection(&result_img, out_!("test_dither.png"));
+    }
+
+    #[test]
+    fn test_dither_color() {
+        let img = setup_default_test_image();
+        let cmp = setup_default_test_image();
+
+        let operation = ImgOp::DitherColor((64, 10));
+
+        let operator = ImageEngine::new(img);
+        let done = operator.ignite(&[Instr::Operation(operation)]);
+        assert!(done.is_ok());
+
+        let result_img = done.unwrap();
+
+        assert_ne!(cmp.raw_pixels(), result_img.raw_pixels());
+
+        output_test_image_for_manual_inspection(&result_img, out_!("test_dither_color.png"));
+    }
+
+    #[test]
+    fn test_dither_color_colors_out_of_range() {
+        let img = setup_default_test_image();
+
+        let operation = ImgOp::DitherColor((32, 10));
+
+        let operator = ImageEngine::new(img);
+        let done = operator.ignite(&[Instr::Operation(operation)]);
+        assert!(matches!(
+            done,
+            Err(SicImageEngineError::DitherColorsOutOfRange(32))
+        ));
+    }
+
+    #[test]
+    fn test_dither_color_sample_factor_out_of_range() {
+        let img = setup_default_test_image();
+
+        let operation = ImgOp::DitherColor((64, 0));
+
+        let operator = ImageEngine::new(img);
+        let done = operator.ignite(&[Instr::Operation(operation)]);
+        assert!(matches!(
+            done,
+            Err(SicImageEngineError::DitherSampleFactorOutOfRange(0))
+        ));
     }
 
     #[test]

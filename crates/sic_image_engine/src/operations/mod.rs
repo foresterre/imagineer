@@ -11,7 +11,8 @@ pub mod brighten;
 pub mod contrast;
 pub mod crop;
 pub mod diff;
-
+pub mod dither;
+pub mod dither_color;
 pub mod draw_text;
 pub mod filter3x3;
 pub mod flip_horizontal;
@@ -25,7 +26,6 @@ pub mod resize;
 pub mod rotate180;
 pub mod rotate270;
 pub mod rotate90;
-
 pub mod threshold;
 pub mod unsharpen;
 pub mod vertical_gradient;
