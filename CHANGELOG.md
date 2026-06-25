@@ -9,6 +9,10 @@ In the changelog below, you may find the notable changes to [imagineer](https://
 
 ## Unreleased
 
+### Added
+
+- Added dav1d based Avif decoder as optional feature (enabled for our own builds)
+
 ### Notable dependency updates
 
 - Updated [image](https://github.com/image-rs/image) to 0.24.10
