@@ -34,6 +34,14 @@ pub enum SicImageEngineError {
     #[error("Unable to dither; the sample factor must be in the range [1, 30], but was '{0}'")]
     DitherSampleFactorOutOfRange(u32),
 
+    #[error("Unable to index colors; the number of colors must be >= 64, but was '{0}'")]
+    IndexColorsQuantColorsOutOfRange(u32),
+
+    #[error(
+        "Unable to index colors; the sample factor must be in the range [1, 30], but was '{0}'"
+    )]
+    IndexColorsQuantSampleFactorOutOfRange(u32),
+
     #[error("Unable to load font: '{0}'")]
     FontError(sic_core::ab_glyph::InvalidFont),
 

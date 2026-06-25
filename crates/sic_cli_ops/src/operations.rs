@@ -31,6 +31,8 @@ pub enum OperationId {
     Grayscale,
     HueRotate,
     HorizontalGradient,
+    IndexColors,
+    IndexColorsQuant,
     Invert,
     Overlay,
     Resize,
@@ -86,6 +88,8 @@ impl OperationId {
             OperationId::Grayscale => 0,
             OperationId::HueRotate => 1,
             OperationId::HorizontalGradient => 2,
+            OperationId::IndexColors => 0,
+            OperationId::IndexColorsQuant => 2,
             OperationId::Invert => 0,
             OperationId::Overlay => 3,
             OperationId::Resize => 2,
@@ -166,6 +170,10 @@ impl OperationId {
                     GradientInput
                 )?))
             }
+            OperationId::IndexColors => Instr::Operation(ImgOp::IndexColors),
+            OperationId::IndexColorsQuant => Instr::Operation(ImgOp::IndexColorsQuant(
+                parse_inputs_by_type!(inputs, (u32, u32))?,
+            )),
             OperationId::Invert => Instr::Operation(ImgOp::Invert),
             OperationId::Overlay => Instr::Operation(ImgOp::Overlay(parse_inputs_by_type!(
                 inputs,

@@ -46,6 +46,8 @@ pub fn parse_image_operations(pairs: Pairs<'_, Rule>) -> Result<Vec<Instr>, SicP
             Rule::grayscale => Ok(Instr::Operation(ImgOp::Grayscale)),
             Rule::huerotate => HueRotate(pair),
             Rule::horizontal_gradient => Ok(parse_horizontal_gradient(pair)?),
+            Rule::index_colors => Ok(Instr::Operation(ImgOp::IndexColors)),
+            Rule::index_colors_quant => IndexColorsQuant(pair),
             Rule::invert => Ok(Instr::Operation(ImgOp::Invert)),
             Rule::overlay => parse_overlay(pair),
             Rule::resize => Resize(pair),
@@ -96,6 +98,7 @@ parse_op_from_pair!(Contrast, f32);
 parse_op_from_pair!(Crop, (u32, u32, u32, u32));
 parse_op_from_pair!(Diff, ImageFromPath);
 parse_op_from_pair!(DitherColor, (u32, u32));
+parse_op_from_pair!(IndexColorsQuant, (u32, u32));
 parse_op_from_pair!(HueRotate, i32);
 parse_op_from_pair!(Resize, (u32, u32));
 parse_op_from_pair!(Unsharpen, (f32, i32));
@@ -357,6 +360,43 @@ mod tests {
         assert_eq!(
             vec![
                 Instr::Operation(ImgOp::DitherColor((64, 10))),
+                Instr::Operation(ImgOp::FlipHorizontal)
+            ],
+            parse_image_operations(pairs).unwrap()
+        );
+    }
+
+    #[test]
+    fn test_parse_index_colors_only() {
+        let pairs = SICParser::parse(Rule::main, "index-colors")
+            .unwrap_or_else(|e| panic!("error: {:?}", e));
+
+        assert_eq!(
+            vec![Instr::Operation(ImgOp::IndexColors)],
+            parse_image_operations(pairs).unwrap()
+        );
+    }
+
+    #[test]
+    fn test_parse_index_colors_quant() {
+        let pairs = SICParser::parse(Rule::main, "index-colors-quant 64 10")
+            .unwrap_or_else(|e| panic!("error: {:?}", e));
+
+        assert_eq!(
+            vec![Instr::Operation(ImgOp::IndexColorsQuant((64, 10)))],
+            parse_image_operations(pairs).unwrap()
+        );
+    }
+
+    // `index-colors-quant` shares its prefix with `index-colors`; ensure it is not mis-parsed.
+    #[test]
+    fn test_parse_index_colors_quant_with_flip() {
+        let pairs = SICParser::parse(Rule::main, "index-colors-quant 64 10;flip-horizontal")
+            .unwrap_or_else(|e| panic!("error: {:?}", e));
+
+        assert_eq!(
+            vec![
+                Instr::Operation(ImgOp::IndexColorsQuant((64, 10))),
                 Instr::Operation(ImgOp::FlipHorizontal)
             ],
             parse_image_operations(pairs).unwrap()

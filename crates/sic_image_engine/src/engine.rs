@@ -144,6 +144,13 @@ impl ImageEngine {
             ImgOp::HueRotate(degree) => {
                 operations::hue_rotate::HueRotate::new(*degree).apply_operation(&mut self.image)
             }
+            ImgOp::IndexColors => {
+                operations::index_colors::IndexColors::new().apply_operation(&mut self.image)
+            }
+            ImgOp::IndexColorsQuant((colors, sample_factor)) => {
+                operations::index_colors_quant::IndexColorsQuant::new(*colors, *sample_factor)
+                    .apply_operation(&mut self.image)
+            }
             ImgOp::HorizontalGradient(colors) => {
                 operations::horizontal_gradient::HorizontalGradient::new(*colors)
                     .apply_operation(&mut self.image)
@@ -1362,6 +1369,70 @@ mod tests {
         assert!(matches!(
             done,
             Err(SicImageEngineError::DitherSampleFactorOutOfRange(0))
+        ));
+    }
+
+    #[test]
+    fn test_index_colors() {
+        let img = setup_default_test_image();
+        let cmp = setup_default_test_image();
+
+        let operation = ImgOp::IndexColors;
+
+        let operator = ImageEngine::new(img);
+        let done = operator.ignite(&[Instr::Operation(operation)]);
+        assert!(done.is_ok());
+
+        let result_img = done.unwrap();
+
+        assert_ne!(cmp.raw_pixels(), result_img.raw_pixels());
+
+        output_test_image_for_manual_inspection(&result_img, out_!("test_index_colors.png"));
+    }
+
+    #[test]
+    fn test_index_colors_quant() {
+        let img = setup_default_test_image();
+        let cmp = setup_default_test_image();
+
+        let operation = ImgOp::IndexColorsQuant((64, 10));
+
+        let operator = ImageEngine::new(img);
+        let done = operator.ignite(&[Instr::Operation(operation)]);
+        assert!(done.is_ok());
+
+        let result_img = done.unwrap();
+
+        assert_ne!(cmp.raw_pixels(), result_img.raw_pixels());
+
+        output_test_image_for_manual_inspection(&result_img, out_!("test_index_colors_quant.png"));
+    }
+
+    #[test]
+    fn test_index_colors_quant_colors_out_of_range() {
+        let img = setup_default_test_image();
+
+        let operation = ImgOp::IndexColorsQuant((32, 10));
+
+        let operator = ImageEngine::new(img);
+        let done = operator.ignite(&[Instr::Operation(operation)]);
+        assert!(matches!(
+            done,
+            Err(SicImageEngineError::IndexColorsQuantColorsOutOfRange(32))
+        ));
+    }
+
+    #[test]
+    fn test_index_colors_quant_sample_factor_out_of_range() {
+        let img = setup_default_test_image();
+
+        let operation = ImgOp::IndexColorsQuant((64, 0));
+
+        let operator = ImageEngine::new(img);
+        let done = operator.ignite(&[Instr::Operation(operation)]);
+        assert!(matches!(
+            done,
+            Err(SicImageEngineError::IndexColorsQuantSampleFactorOutOfRange(0))
         ));
     }
 

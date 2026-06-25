@@ -30,6 +30,8 @@ pub enum ImgOp {
     Grayscale,
     HueRotate(i32),
     HorizontalGradient(GradientInput),
+    IndexColors,
+    IndexColorsQuant((u32, u32)),
     Invert,
     Overlay(OverlayInputs),
     Resize((u32, u32)),
