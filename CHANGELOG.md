@@ -12,7 +12,9 @@ In the changelog below, you may find the notable changes to [imagineer](https://
 ### Added
 
 - Added image operation `dither`, which reduces the image to black and white using Floyd-Steinberg error diffusion
-- Added image operation `dither-color`, which reduces the image to a palette trained on its own pixels (NeuQuant) using Floyd-Steinberg error diffusion
+- Added image operation `dither-quant`, which reduces the image to a palette trained on its own pixels (NeuQuant) using Floyd-Steinberg error diffusion
+- Added image operation `index-colors`, which maps each pixel to the index of its nearest black or white palette entry (BiLevel)
+- Added image operation `index-colors-quant`, which trains a color palette on the image's own pixels (NeuQuant) and maps each pixel to the index of its nearest palette entry
 - Added dav1d based Avif decoder as optional feature (enabled for our own builds)
 
 ### Notable dependency updates

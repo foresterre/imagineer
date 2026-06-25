@@ -23,7 +23,7 @@ pub enum OperationId {
     Crop,
     Diff,
     Dither,
-    DitherColor,
+    DitherQuant,
     DrawText,
     Filter3x3,
     FlipHorizontal,
@@ -31,6 +31,8 @@ pub enum OperationId {
     Grayscale,
     HueRotate,
     HorizontalGradient,
+    IndexColors,
+    IndexColorsQuant,
     Invert,
     Overlay,
     Resize,
@@ -78,7 +80,7 @@ impl OperationId {
             OperationId::Crop => 4,
             OperationId::Diff => 1,
             OperationId::Dither => 0,
-            OperationId::DitherColor => 2,
+            OperationId::DitherQuant => 2,
             OperationId::DrawText => 5,
             OperationId::Filter3x3 => 9,
             OperationId::FlipHorizontal => 0,
@@ -86,6 +88,8 @@ impl OperationId {
             OperationId::Grayscale => 0,
             OperationId::HueRotate => 1,
             OperationId::HorizontalGradient => 2,
+            OperationId::IndexColors => 0,
+            OperationId::IndexColorsQuant => 2,
             OperationId::Invert => 0,
             OperationId::Overlay => 3,
             OperationId::Resize => 2,
@@ -140,7 +144,7 @@ impl OperationId {
                 Instr::Operation(ImgOp::Diff(parse_inputs_by_type!(inputs, ImageFromPath)?))
             }
             OperationId::Dither => Instr::Operation(ImgOp::Dither),
-            OperationId::DitherColor => Instr::Operation(ImgOp::DitherColor(
+            OperationId::DitherQuant => Instr::Operation(ImgOp::DitherQuant(
                 parse_inputs_by_type!(inputs, (u32, u32))?,
             )),
             OperationId::DrawText => {
@@ -166,6 +170,10 @@ impl OperationId {
                     GradientInput
                 )?))
             }
+            OperationId::IndexColors => Instr::Operation(ImgOp::IndexColors),
+            OperationId::IndexColorsQuant => Instr::Operation(ImgOp::IndexColorsQuant(
+                parse_inputs_by_type!(inputs, (u32, u32))?,
+            )),
             OperationId::Invert => Instr::Operation(ImgOp::Invert),
             OperationId::Overlay => Instr::Operation(ImgOp::Overlay(parse_inputs_by_type!(
                 inputs,

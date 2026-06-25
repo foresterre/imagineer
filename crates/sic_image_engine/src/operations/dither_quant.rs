@@ -7,12 +7,12 @@ use sic_core::image::imageops::colorops::dither;
 const MIN_COLORS: u32 = 64;
 const SAMPLE_FACTOR_RANGE: std::ops::RangeInclusive<u32> = 1..=30;
 
-pub struct DitherColor {
+pub struct DitherQuant {
     colors: u32,
     sample_factor: u32,
 }
 
-impl DitherColor {
+impl DitherQuant {
     pub fn new(colors: u32, sample_factor: u32) -> Self {
         Self {
             colors,
@@ -21,14 +21,16 @@ impl DitherColor {
     }
 }
 
-impl ImageOperation for DitherColor {
+impl ImageOperation for DitherQuant {
     fn apply_to_frame(&self, image: &mut DynamicImage) -> Result<(), SicImageEngineError> {
         if self.colors < MIN_COLORS {
-            return Err(SicImageEngineError::DitherColorsOutOfRange(self.colors));
+            return Err(SicImageEngineError::DitherQuantColorsOutOfRange(
+                self.colors,
+            ));
         }
 
         if !SAMPLE_FACTOR_RANGE.contains(&self.sample_factor) {
-            return Err(SicImageEngineError::DitherSampleFactorOutOfRange(
+            return Err(SicImageEngineError::DitherQuantSampleFactorOutOfRange(
                 self.sample_factor,
             ));
         }
