@@ -1,0 +1,47 @@
+name: "setup-dav1d"
+description: "Install build prerequisites, build a static libdav1d from source, and expose it to the build."
+
+inputs:
+  setup-msvc:
+    description: "Set up the MSVC developer environment, required for meson on the windows-msvc target. Disable for the windows-gnu target."
+    required: false
+    default: "true"
+
+runs:
+  using: "composite"
+  steps:
+    - name: install_just
+      uses: extractions/setup-just@v2
+
+    - name: setup_msvc
+      if: runner.os == 'Windows' && inputs.setup-msvc == 'true'
+      uses: ilammy/msvc-dev-cmd@v1
+
+    - name: install_dav1d_prerequisites
+      shell: bash
+      run: just install-dav1d-prerequisites
+
+    - name: add_nasm_to_path
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: Add-Content -Path $env:GITHUB_PATH -Value "$env:LOCALAPPDATA\Microsoft\WinGet\Links"
+
+    - name: install_dav1d
+      shell: bash
+      run: just install-dav1d
+
+    - name: expose_dav1d_unix
+      if: runner.os != 'Windows'
+      shell: bash
+      run: echo "PKG_CONFIG_PATH=${GITHUB_WORKSPACE}/target/dav1d/lib/pkgconfig${PKG_CONFIG_PATH:+:${PKG_CONFIG_PATH}}" >> "$GITHUB_ENV"
+
+    - name: expose_dav1d_windows
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        $prefix = "$env:GITHUB_WORKSPACE\target\dav1d"
+        Add-Content -Path $env:GITHUB_ENV -Value "SYSTEM_DEPS_DAV1D_NO_PKG_CONFIG=1"
+        Add-Content -Path $env:GITHUB_ENV -Value "SYSTEM_DEPS_DAV1D_SEARCH_NATIVE=$prefix\lib"
+        Add-Content -Path $env:GITHUB_ENV -Value "SYSTEM_DEPS_DAV1D_INCLUDE=$prefix\include"
+        Add-Content -Path $env:GITHUB_ENV -Value "SYSTEM_DEPS_DAV1D_LIB=dav1d"
+        Add-Content -Path $env:GITHUB_ENV -Value "SYSTEM_DEPS_LINK=static"

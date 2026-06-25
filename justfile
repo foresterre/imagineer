@@ -1,7 +1,16 @@
-# determine the current Minimum Supported Rust Version for sic
-msrv:
-    cargo install cargo-msrv
-    cargo msrv find --output-format json --all-features --write-msrv
+import '.justfiles/dav1d.just'
+import '.justfiles/dav1d_prerequisites.just'
+
+set windows-shell := ["pwsh", "-NoLogo", "-Command"]
+
+default:
+    @just --choose
+
+install-dav1d-prerequisites:
+    just _install-dav1d-prerequisites-{{ os() }}
+
+install-dav1d:
+    just _install-dav1d-{{ os() }}
 
 # format all workspace packages
 fmt:
@@ -15,6 +24,11 @@ lint:
 test:
     cargo test --all-features --all
 
+# determine the current Minimum Supported Rust Version for sic
+msrv:
+    cargo install cargo-msrv
+    cargo msrv find --output-format json --all-features --write-msrv
+
 deny:
     cargo deny --all-features check
 
@@ -24,10 +38,6 @@ pre-commit:
     just lint
     just test
     just deny
-
-# package a release for the current platform
-pack-release:
-    cargo run -p pack-release
 
 publish-workspace new_version:
     cargo install cargo-publish-workspace

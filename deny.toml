@@ -19,6 +19,9 @@ allow = [
     "Zlib",
     "Unicode-3.0",
 ]
+exceptions = [
+    { name = "mp4parse", allow = ["MPL-2.0"] },
+]
 
 [[licenses.clarify]]
 name = "exr"

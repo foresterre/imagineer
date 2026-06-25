@@ -45,6 +45,7 @@ yare = "3"
 [features]
 default = ["nasm"]
 nasm = ["sic_core/nasm"]
+avif-decoder = ["sic_core/avif-decoder"]
 
 output-test-images = []
 

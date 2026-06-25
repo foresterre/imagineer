@@ -38,8 +38,10 @@ jobs:
         with:
           toolchain: ${{ matrix.rust }}
 
-      - name: install_nasm
-        uses: ilammy/setup-nasm@v1
+      - name: setup_dav1d
+        uses: ./.github/actions/setup-dav1d
+        with:
+          setup-msvc: ${{ matrix.build != 'win-gnu-stable' }}
 
       - name: fetch
         run: cargo fetch --verbose
