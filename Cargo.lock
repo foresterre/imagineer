@@ -56,12 +56,6 @@ dependencies = [
 
 [[package]]
 name = "aligned-vec"
-version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4aa90d7ce82d4be67b64039a3d588d38dbcc6736577de4a847025ce5b0c468d1"
-
-[[package]]
-name = "aligned-vec"
 version = "0.6.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dc890384c8602f339876ded803c97ad529f3842aba97f6392b3dba0dd171769b"
@@ -1476,7 +1470,7 @@ version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "43b6dd56e85d9483277cde964fd1bdb0428de4fec5ebba7540995639a21cb32b"
 dependencies = [
- "aligned-vec 0.6.4",
+ "aligned-vec",
  "arbitrary",
  "arg_enum_proc_macro",
  "arrayvec",
@@ -1976,11 +1970,11 @@ checksum = "06abde3611657adf66d383f00b093d7faecc7fa57071cce2578660c9f1010821"
 
 [[package]]
 name = "v_frame"
-version = "0.3.8"
+version = "0.3.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d6f32aaa24bacd11e488aa9ba66369c7cd514885742c9fe08cfe85884db3e92b"
+checksum = "666b7727c8875d6ab5db9533418d7c764233ac9c0cff1d469aec8fa127597be2"
 dependencies = [
- "aligned-vec 0.5.0",
+ "aligned-vec",
  "num-traits",
  "wasm-bindgen",
 ]
