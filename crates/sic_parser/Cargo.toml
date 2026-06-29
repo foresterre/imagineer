@@ -13,10 +13,8 @@ rust-version.workspace = true
 [dependencies]
 sic_core = { workspace = true }
 sic_image_engine = { workspace = true }
-
-pest = "2.7.15"
-pest_derive = "2.7.15"
 thiserror = { workspace = true }
+winnow = "1.0.3"
 
 [dev-dependencies]
 sic_testing = { workspace = true }
