@@ -14,8 +14,8 @@ rust-version.workspace = true
 sic_core = { workspace = true }
 sic_image_engine = { workspace = true }
 
-pest = "2.7.15"
-pest_derive = "2.7.15"
+pest = "2.9.6"
+pest_derive = "2.9.6"
 thiserror = { workspace = true }
 
 [dev-dependencies]

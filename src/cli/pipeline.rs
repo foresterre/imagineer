@@ -1,6 +1,6 @@
 use std::borrow::BorrowMut;
 use std::fs::File;
-use std::io::{self, Read, Seek, SeekFrom, Stdout, Write};
+use std::io::{self, IsTerminal, Read, Seek, SeekFrom, Stdout, Write};
 
 use crate::cli::config::{Config, InputOutputMode, InputOutputModeType, PathVariant};
 use crate::cli::license::LicenseTexts;
@@ -127,7 +127,7 @@ where
 /// If no file path is provided, the stdin will be assumed.
 fn create_reader(path_variant: &PathVariant) -> anyhow::Result<Box<dyn Read>> {
     match path_variant {
-        PathVariant::StdStream if atty::is(atty::Stream::Stdin) => bail!(
+        PathVariant::StdStream if io::stdin().is_terminal() => bail!(
             "An input image should be given by providing a path using the input argument or \
                  by piping an image to the stdin."
         ),
