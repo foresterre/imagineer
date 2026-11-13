@@ -61,7 +61,6 @@ mod corpus {
 
     ide!();
 
-    // Inputs the parser must accept. Kept from the original grammar's test suite.
     #[parameterized(input = {
         "blur 1;\nbrighten 2",
         "blur 15",
@@ -118,7 +117,6 @@ mod corpus {
         assert!(parse_script(input).is_ok(), "should accept {input:?}");
     }
 
-    // Inputs the parser must reject.
     #[parameterized(input = {
         "blur 15.",
         "blur 15 28;",

@@ -1,11 +1,10 @@
 #![deny(clippy::all)]
 
-#[macro_use]
-extern crate strum_macros;
-
 #[cfg(test)]
 #[macro_use]
 extern crate parameterized;
+#[macro_use]
+extern crate strum_macros;
 
 use crate::errors::SicCliOpsError;
 use crate::operations::OperationId;
@@ -24,25 +23,53 @@ pub type TResult<T> = Result<T, SicCliOpsError>;
 /// only the amount of arguments we expect to receive, in this case 0.
 /// Since we can rely on Clap, we left the added complexity out here.  
 pub fn create_image_ops<I: IntoIterator<Item = String>>(iter: I) -> TResult<Vec<Instr>> {
+    let script = argv_to_script(iter)?;
+    Ok(sic_parser::parse_script(&script)?)
+}
+
+fn argv_to_script<I: IntoIterator<Item = String>>(iter: I) -> TResult<String> {
     let mut iter = iter.into_iter();
+    let mut statements: Vec<String> = Vec::new();
 
-    let size = iter.size_hint().1.unwrap_or(128);
-
-    let mut ast: Vec<Instr> = Vec::with_capacity(size);
-
-    while let Some(ref program_argument) = iter.next() {
-        if program_argument.starts_with("--")
-            && OperationId::VARIANTS.contains(&&program_argument[2..])
-        {
-            let operation = OperationId::try_from_name(&program_argument[2..])?;
-            let inputs = take_n(&mut iter, operation)?;
-            let inputs = inputs.iter().map(|v| v.as_str()).collect::<Vec<&str>>();
-            ast.push(operation.create_instruction(inputs)?);
+    while let Some(arg) = iter.next() {
+        let Some(name) = arg.strip_prefix("--") else {
+            continue;
+        };
+        if !OperationId::VARIANTS.contains(&name) {
+            continue;
         }
-        // else: skip
+
+        let operation = OperationId::try_from_name(name)?;
+        let raw = take_n(&mut iter, operation)?;
+
+        statements.push(match operation {
+            OperationId::SamplingFilter => format!("set sampling-filter {}", raw[0]),
+            OperationId::PreserveAspectRatio => format!("set preserve-aspect-ratio {}", raw[0]),
+            _ if raw.is_empty() => name.to_string(),
+            _ => {
+                let args = raw
+                    .iter()
+                    .map(|token| quote(token))
+                    .collect::<Vec<_>>()
+                    .join(" ");
+                format!("{name} {args}")
+            }
+        });
     }
 
-    Ok(ast)
+    Ok(statements.join("; "))
+}
+
+fn quote(token: &str) -> String {
+    let is_number = token.parse::<f64>().is_ok();
+    let is_bool = matches!(token, "true" | "false");
+    let is_named_value = token.contains('(') && token.ends_with(')');
+
+    if is_number || is_bool || is_named_value {
+        token.to_string()
+    } else {
+        format!("'{}'", token.replace('\'', ""))
+    }
 }
 
 fn take_n<I: Iterator<Item = String>>(
@@ -72,10 +99,10 @@ mod tests {
     #[allow(clippy::vec_init_then_push)]
     mod individual_args {
         use super::*;
-        use sic_image_engine::ImgOp;
         use sic_image_engine::engine::EnvItem;
         use sic_image_engine::wrapper::filter_type::FilterTypeWrap;
         use sic_image_engine::wrapper::image_path::ImageFromPath;
+        use sic_image_engine::ImgOp;
         use sic_testing::setup_test_image;
 
         macro_rules! op {
@@ -177,7 +204,7 @@ mod tests {
             #[parameterized(
                 ops = {
                     vec!["--draw-text", "my text", "coord(0, 1)", "rgba(10, 10, 255, 255)", "size(16.0)", r#"font("resources/font/Lato-Regular.ttf")"#],
-                    vec!["--draw-text", "my text", "coord(0, 1)", "rgba(10, 10, 255, 255)", "size(16.0)", r#"font("resources/font/Lato-Regular()".ttf")"#],
+                    vec!["--draw-text", "my text", "coord(0, 1)", "rgba(10, 10, 255, 255)", "size(16.0)", r#"font("resources/font/Lato-Regular().ttf")"#],
                 },
                 expected = {
                     op![ImgOp::DrawText(DrawTextInner::new("my text".to_string(),
@@ -189,7 +216,7 @@ mod tests {
                     op![ImgOp::DrawText(DrawTextInner::new("my text".to_string(),
                         (0, 1),
                         FontOptions::new(
-                        PathBuf::from("resources/font/Lato-Regular()\".ttf".to_string()),
+                        PathBuf::from("resources/font/Lato-Regular().ttf".to_string()),
                         Rgba([10, 10, 255, 255]),
                         FontScale::Uniform(16.0))))]
                 }
