@@ -21,3 +21,5 @@ fabric.properties
 sic-*.zip
 shell_completions.zip
 /stable-*
+
+.DS_Store
