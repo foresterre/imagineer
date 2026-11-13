@@ -21,3 +21,6 @@ fabric.properties
 sic-*.zip
 shell_completions.zip
 /stable-*
+
+# macOS
+.DS_Store
