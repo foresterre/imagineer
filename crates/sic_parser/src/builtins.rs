@@ -34,6 +34,7 @@ pub fn operation<A: Argument>(call: &Call<'_, A>) -> Result<ImgOp, ResolveError>
                 ImgOp::DrawText(DrawTextInner::new(text, (x, y), font_options))
             },
         ),
+        "equalize-histogram" => call.bind([]).map(|()| ImgOp::EqualizeHistogram),
         "fast-blur" => call.bind(["sigma"]).map(|(sigma,)| ImgOp::FastBlur(sigma)),
         "filter3x3" => call
             .bind([

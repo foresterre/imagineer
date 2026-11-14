@@ -71,6 +71,36 @@ mod blur {
 }
 
 #[cfg(test)]
+mod equalize_histogram {
+    use super::*;
+    use crate::common::*;
+
+    #[test]
+    fn equalize_histogram() {
+        let mut process = command(
+            DEFAULT_IN,
+            "cio_equalize_histogram.png",
+            "--equalize-histogram",
+        );
+        let result = process.wait();
+        assert!(result.is_ok());
+        assert!(result.unwrap().success());
+    }
+
+    #[test]
+    fn equalize_histogram_not() {
+        let mut process = command(
+            DEFAULT_IN,
+            "cio_equalize_histogram_not.png",
+            "--equalize-histogram 1",
+        );
+        let result = process.wait();
+        assert!(result.is_ok());
+        assert_not!(result.unwrap().success());
+    }
+}
+
+#[cfg(test)]
 mod fast_blur {
     use crate::common::*;
 
