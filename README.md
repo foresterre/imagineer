@@ -135,6 +135,7 @@ If we use the _cli operations_ method the previously shown example becomes: <br>
 |dither             | `dither`                                  | Reduce the image to black and white using Floyd-Steinberg error diffusion. |
 |dither-quant       | `dither-quant <uint> <uint>`              | Syntax: `dither-quant <colors> <sample-factor>`, where `colors` is the number of palette colors (at least 64) and `sample-factor` is the training sample fraction in the range 1 to 30 (1 is best quality and slowest, when in doubt, 10 is a good compromise). Reduce the image to a palette trained on its own pixels (NeuQuant) using Floyd-Steinberg error diffusion. |
 |draw-text ^2       | `draw-text <string> <nv:coord> <nv:rgba> <nv:size> <nv:font>` | Draw text on top of an image (note: alpha-blending is not yet supported).  |
+|fast-blur          | `fast-blur <fp>`                          | Performs a faster, approximate Gaussian blur on the image. The argument must be larger than `0.0`. |
 |filter3x3          | `filter3x3 <fp9x> `                       | Apply a 3 by 3 convolution filter. |
 |flip horizontal    | `flip-horizontal`                         | Flips the image on the horizontal axis. |
 |flip vertical      | `flip-vertical`                           | Flips the image on the vertical axis. |

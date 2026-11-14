@@ -24,6 +24,7 @@ pub enum ImgOp {
     Dither,
     DitherQuant((u32, u32)),
     DrawText(DrawTextInner),
+    FastBlur(f32),
     Filter3x3([f32; 9]),
     FlipHorizontal,
     FlipVertical,
