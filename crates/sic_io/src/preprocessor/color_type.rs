@@ -100,7 +100,7 @@ fn to_rgb8(image: DynamicImage) -> SicImage {
 }
 
 fn to_rgba8(image: DynamicImage) -> SicImage {
-    if let ok @ DynamicImage::ImageRgb8(_) = image {
+    if let ok @ DynamicImage::ImageRgba8(_) = image {
         SicImage::Static(ok)
     } else {
         SicImage::Static(DynamicImage::ImageRgba8(image.to_rgba8()))
@@ -112,5 +112,43 @@ fn to_rgba16(image: DynamicImage) -> SicImage {
         SicImage::Static(ok)
     } else {
         SicImage::Static(DynamicImage::ImageRgba16(image.to_rgba16()))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use parameterized::parameterized;
+    use sic_core::image::ColorType;
+
+    fn preprocess_static(format: DynamicImageFormat, image: DynamicImage) -> DynamicImage {
+        let preprocessed = ColorTypePreprocessor::new(format)
+            .preprocess(SicImage::Static(image))
+            .unwrap();
+
+        match preprocessed {
+            SicImage::Static(image) => image,
+            SicImage::Animated(_) => panic!("expected a static image"),
+        }
+    }
+
+    #[parameterized(
+        image = {
+            DynamicImage::new_luma8(2, 2),
+            DynamicImage::new_luma_a8(2, 2),
+            DynamicImage::new_rgb8(2, 2),
+            DynamicImage::new_rgba8(2, 2),
+            DynamicImage::new_luma16(2, 2),
+            DynamicImage::new_luma_a16(2, 2),
+            DynamicImage::new_rgb16(2, 2),
+            DynamicImage::new_rgba16(2, 2),
+            DynamicImage::new_rgb32f(2, 2),
+            DynamicImage::new_rgba32f(2, 2),
+        }
+    )]
+    fn gif_gets_rgba8(image: DynamicImage) {
+        let out = preprocess_static(DynamicImageFormat::Gif, image);
+
+        assert_eq!(out.color(), ColorType::Rgba8);
     }
 }
