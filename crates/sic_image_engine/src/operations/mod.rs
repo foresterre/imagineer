@@ -14,6 +14,7 @@ pub mod diff;
 pub mod dither;
 pub mod dither_quant;
 pub mod draw_text;
+pub mod equalize_histogram;
 pub mod fast_blur;
 pub mod filter3x3;
 pub mod flip_horizontal;

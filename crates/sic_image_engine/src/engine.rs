@@ -129,6 +129,8 @@ impl ImageEngine {
             ImgOp::DrawText(inner) => {
                 operations::draw_text::DrawText::new(inner).apply_operation(&mut self.image)
             }
+            ImgOp::EqualizeHistogram => operations::equalize_histogram::EqualizeHistogram::new()
+                .apply_operation(&mut self.image),
             ImgOp::FastBlur(sigma) => {
                 operations::fast_blur::FastBlur::new(*sigma).apply_operation(&mut self.image)
             }
@@ -1341,6 +1343,24 @@ mod tests {
         assert_ne!(cmp.raw_pixels(), result_img.raw_pixels());
 
         output_test_image_for_manual_inspection(&result_img, out_!("test_threshold.png"));
+    }
+
+    #[test]
+    fn test_equalize_histogram() {
+        let img = setup_default_test_image();
+        let cmp = setup_default_test_image();
+
+        let operation = ImgOp::EqualizeHistogram;
+
+        let operator = ImageEngine::new(img);
+        let done = operator.ignite(&[Instr::Operation(operation)]);
+        assert!(done.is_ok());
+
+        let result_img = done.unwrap();
+
+        assert_ne!(cmp.raw_pixels(), result_img.raw_pixels());
+
+        output_test_image_for_manual_inspection(&result_img, out_!("test_equalize_histogram.png"));
     }
 
     #[test]
