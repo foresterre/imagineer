@@ -177,6 +177,7 @@ impl ImageEngine {
             ImgOp::Rotate270 => {
                 operations::rotate270::Rotate270::new().apply_operation(&mut self.image)
             }
+            ImgOp::Sharpen => operations::sharpen::Sharpen::new().apply_operation(&mut self.image),
             ImgOp::Threshold => {
                 operations::threshold::Threshold::new().apply_operation(&mut self.image)
             }
@@ -1340,6 +1341,24 @@ mod tests {
         assert_ne!(cmp.raw_pixels(), result_img.raw_pixels());
 
         output_test_image_for_manual_inspection(&result_img, out_!("test_threshold.png"));
+    }
+
+    #[test]
+    fn test_sharpen() {
+        let img = setup_default_test_image();
+        let cmp = setup_default_test_image();
+
+        let operation = ImgOp::Sharpen;
+
+        let operator = ImageEngine::new(img);
+        let done = operator.ignite(&[Instr::Operation(operation)]);
+        assert!(done.is_ok());
+
+        let result_img = done.unwrap();
+
+        assert_ne!(cmp.raw_pixels(), result_img.raw_pixels());
+
+        output_test_image_for_manual_inspection(&result_img, out_!("test_sharpen.png"));
     }
 
     #[test]

@@ -460,6 +460,28 @@ mod rotate270 {
 }
 
 #[cfg(test)]
+mod sharpen {
+    use super::*;
+    use crate::common::*;
+
+    #[test]
+    fn sharpen() {
+        let mut process = command(DEFAULT_IN, "cio_sharpen.png", "--sharpen");
+        let result = process.wait();
+        assert!(result.is_ok());
+        assert!(result.unwrap().success());
+    }
+
+    #[test]
+    fn sharpen_not() {
+        let mut process = command(DEFAULT_IN, "cio_sharpen_not.png", "--sharpen 1");
+        let result = process.wait();
+        assert!(result.is_ok());
+        assert_not!(result.unwrap().success());
+    }
+}
+
+#[cfg(test)]
 mod unsharpen {
     use super::*;
     use crate::common::*;

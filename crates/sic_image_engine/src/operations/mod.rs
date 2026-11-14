@@ -29,6 +29,7 @@ pub mod resize;
 pub mod rotate180;
 pub mod rotate270;
 pub mod rotate90;
+pub mod sharpen;
 pub mod threshold;
 pub mod unsharpen;
 pub mod vertical_gradient;
