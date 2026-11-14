@@ -104,6 +104,34 @@ mod convert_to_x {
 
         clean_up_output_path(path_buf_str(&output_path));
     }
+
+    #[test]
+    fn convert_rgb_to_gif() {
+        let input_path = setup_input_path("rainbow_8x6.bmp");
+        let output_path = setup_output_path("cli_convert_rgb_to_gif.gif");
+
+        let args = vec![
+            "imagineer",
+            "--input",
+            input_path.to_str().unwrap(),
+            "--output",
+            path_buf_str(&output_path),
+        ];
+        let matches = get_app("", "", "").get_matches_from(args);
+
+        let complete = run_with_devices(
+            InputOutputMode::try_from_matches(&matches).unwrap(),
+            &build_app_config(&matches).unwrap(),
+        );
+
+        complete.unwrap();
+        assert!(is_image_format(
+            path_buf_str(&output_path),
+            image::ImageFormat::Gif
+        ));
+
+        clean_up_output_path(path_buf_str(&output_path));
+    }
 }
 
 #[cfg(test)]
