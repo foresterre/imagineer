@@ -6,9 +6,6 @@ pub enum SicCliOpsError {
     #[error("Unable to parse: {0}")]
     ParserError(#[from] SicParserError),
 
-    #[error("Failed to parse value of type `{typ}`, error:\n\t{err}")]
-    UnableToParseValueOfType { err: SicParserError, typ: String },
-
     #[error("Internal Error: {0}")]
     InternalError(InternalErrorSource),
 

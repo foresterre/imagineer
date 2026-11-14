@@ -1,58 +1,128 @@
-use crate::named_value::NamedValueError;
+use crate::types::Type;
 use sic_image_engine::errors::SicImageEngineError;
+use std::fmt::Display;
 use thiserror::Error;
+use winnow::error::{ContextError, StrContext};
 
 #[derive(Debug, Error)]
 pub enum SicParserError {
-    #[error("expected named value with signature '{0}', but got no more inputs")]
-    ExpectedNamedValue(String),
+    #[error(transparent)]
+    Syntax(#[from] SyntaxError),
 
-    #[error("expected value with of type '{0}', but got no more inputs")]
-    ExpectedValue(String),
-
-    #[error("unable to parse filter type: {0}")]
-    FilterTypeError(SicImageEngineError),
-
-    #[error("unable to parse named value: {0}")]
-    NamedValueParsingError(NamedValueError),
-
-    #[error("string value expected an inner value, but none was found")]
-    NoInnerString,
-
-    #[error("{0}")]
-    OperationError(OperationParamError),
-
-    #[error("unable to parse script: {0}")]
-    PestGrammarError(String),
-
-    #[error("parsing failed: operation doesn't exist")]
-    UnknownOperationError,
-
-    #[error("unable to parse value '{0}'")]
-    ValueParsingError(String),
-
-    #[error("unable to parse value '{0}', error:\n\t{1}")]
-    ValueParsingErrorWithInnerError(String, Box<dyn std::error::Error + Send + Sync>),
+    #[error(transparent)]
+    Resolve(#[from] ResolveError),
 }
 
 #[derive(Debug, Error)]
-pub enum OperationParamError {
-    #[error(
-        "Unable to parse `set` environment command. Error: expected a single `set` inner element."
-    )]
-    SetEnvironment,
+#[error("syntax error at line {line}, column {column}: {message}")]
+pub struct SyntaxError {
+    line: usize,
+    column: usize,
+    message: String,
+}
 
-    #[error("Unable to parse `set` environment command. Error on element: {0}")]
-    SetEnvironmentElement(String),
+impl SyntaxError {
+    pub fn new(input: &str, offset: usize, error: &ContextError) -> Self {
+        let (before, after) = input.split_at_checked(offset).unwrap_or((input, ""));
 
-    #[error("Unable to parse operation argument(s): {0}")]
-    PestArgError(String),
+        let line = before.matches('\n').count() + 1;
+        let column = before
+            .rsplit('\n')
+            .next()
+            .map_or(0, |line| line.chars().count())
+            + 1;
 
-    #[error(
-        "Unable to parse `del` environment command. Error: expected a single `del` inner element."
-    )]
-    UnsetEnvironment,
+        let label = error.context().find_map(|context| match context {
+            StrContext::Label(label) => Some(*label),
+            _ => None,
+        });
+        let expected = error
+            .context()
+            .filter_map(|context| match context {
+                StrContext::Expected(value) => Some(value.to_string()),
+                _ => None,
+            })
+            .collect::<Vec<_>>();
+        let found = after
+            .chars()
+            .next()
+            .map_or_else(|| "end of input".to_string(), |c| format!("{c:?}"));
 
-    #[error("Unable to parse `del` environment command. Error on element: {0}")]
-    UnsetEnvironmentElement(String),
+        let mut message = String::new();
+        if let Some(label) = label {
+            message.push_str(&format!("invalid {label}: "));
+        }
+        if !expected.is_empty() {
+            message.push_str(&format!("expected {}, ", expected.join(" or ")));
+        }
+        message.push_str(&format!("found {found}"));
+
+        Self {
+            line,
+            column,
+            message,
+        }
+    }
+}
+
+#[derive(Debug, Error)]
+pub enum ResolveError {
+    #[error("unknown operation `{name}`")]
+    UnknownOperation { name: String },
+
+    #[error("unknown option `{name}`, expected `sampling-filter` or `preserve-aspect-ratio`")]
+    UnknownOption { name: String },
+
+    #[error("wrong number of arguments for `{function}`: expected {expected}, found {found}")]
+    ArgumentCount {
+        function: String,
+        expected: usize,
+        found: usize,
+    },
+
+    #[error("invalid argument `{param}` for `{function}`")]
+    Argument {
+        function: String,
+        param: &'static str,
+        source: Box<ArgumentError>,
+    },
+
+    #[error("invalid value for option `{option}`")]
+    OptionValue {
+        option: String,
+        source: Box<ArgumentError>,
+    },
+}
+
+#[derive(Debug, Error)]
+pub enum ArgumentError {
+    #[error("expected {expected}, found {found}")]
+    Mismatch { expected: Type, found: String },
+
+    #[error("{lexeme} doesn't fit in {expected}")]
+    OutOfRange { expected: Type, lexeme: String },
+
+    #[error(transparent)]
+    FilterType(SicImageEngineError),
+
+    #[error(transparent)]
+    Syntax(#[from] SyntaxError),
+
+    #[error(transparent)]
+    InCall(Box<ResolveError>),
+}
+
+impl ArgumentError {
+    pub fn mismatch(expected: Type, found: impl Display) -> Self {
+        Self::Mismatch {
+            expected,
+            found: found.to_string(),
+        }
+    }
+}
+
+impl From<ResolveError> for ArgumentError {
+    fn from(error: ResolveError) -> Self {
+        Self::InCall(Box::new(error))
+    }
 }
