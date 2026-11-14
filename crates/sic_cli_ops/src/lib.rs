@@ -37,7 +37,7 @@ pub fn create_image_ops<I: IntoIterator<Item = String>>(iter: I) -> TResult<Vec<
             let operation = OperationId::try_from_name(&program_argument[2..])?;
             let inputs = take_n(&mut iter, operation)?;
             let inputs = inputs.iter().map(|v| v.as_str()).collect::<Vec<&str>>();
-            ast.push(operation.create_instruction(inputs)?);
+            ast.push(operation.create_instruction(&inputs)?);
         }
         // else: skip
     }
@@ -177,7 +177,7 @@ mod tests {
             #[parameterized(
                 ops = {
                     vec!["--draw-text", "my text", "coord(0, 1)", "rgba(10, 10, 255, 255)", "size(16.0)", r#"font("resources/font/Lato-Regular.ttf")"#],
-                    vec!["--draw-text", "my text", "coord(0, 1)", "rgba(10, 10, 255, 255)", "size(16.0)", r#"font("resources/font/Lato-Regular()".ttf")"#],
+                    vec!["--draw-text", "my text", "coord(0, 1)", "rgba(10, 10, 255, 255)", "size(16.0)", r#"font('resources/font/Lato-Regular()".ttf')"#],
                 },
                 expected = {
                     op![ImgOp::DrawText(DrawTextInner::new("my text".to_string(),
