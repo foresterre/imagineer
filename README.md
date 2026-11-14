@@ -152,6 +152,7 @@ If we use the _cli operations_ method the previously shown example becomes: <br>
 |rotate90           | `rotate90`                                | Rotate an image 90 degrees. |
 |rotate180          | `rotate180`                               | Rotate an image 180 degrees. |
 |rotate270          | `rotate270`                               | Rotate an image 270 degrees. |
+|sharpen            | `sharpen`                                 | Sharpen the image with a 3 by 3 sharpen filter. Keeps the image colors. |
 |threshold          | `threshold`                               | Apply automatic thresholding on the image. |
 |unsharpen          | `unsharpen <fp> <int>`                    | Applies an unsharpen mask to the image. The first parameter defines how much the image should be blurred and the second parameter defines a threshold. If the difference between the original and blurred image is at least the threshold, they will be subtracted from each other. Can be used to sharpen an image. |
 |vertical gradient  | `vertical-gradient <nv:rgba> <nv:rgba>`   | Fill and blend the image with a vertical gradient from top to bottom.  |

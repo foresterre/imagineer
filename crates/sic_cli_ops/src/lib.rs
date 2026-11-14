@@ -134,6 +134,7 @@ mod tests {
                 vec!["--rotate90"],
                 vec!["--rotate180"],
                 vec!["--rotate270"],
+                vec!["--sharpen"],
                 vec!["--unsharpen", "-1.0", "-1"],
             },
             expected = {
@@ -159,6 +160,7 @@ mod tests {
                 op![ImgOp::Rotate90],
                 op![ImgOp::Rotate180],
                 op![ImgOp::Rotate270],
+                op![ImgOp::Sharpen],
                 op![ImgOp::Unsharpen((-1.0, -1))],
             },
         )]
