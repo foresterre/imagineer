@@ -129,6 +129,9 @@ impl ImageEngine {
             ImgOp::DrawText(inner) => {
                 operations::draw_text::DrawText::new(inner).apply_operation(&mut self.image)
             }
+            ImgOp::FastBlur(sigma) => {
+                operations::fast_blur::FastBlur::new(*sigma).apply_operation(&mut self.image)
+            }
             ImgOp::Filter3x3(kernel) => {
                 operations::filter3x3::Filter3x3::new(kernel).apply_operation(&mut self.image)
             }
@@ -624,6 +627,37 @@ mod tests {
         assert!(done.is_ok());
 
         output_test_image_for_manual_inspection(&done.unwrap(), out_!("test_blur.png"));
+    }
+
+    #[test]
+    fn test_fast_blur() {
+        let img = setup_default_test_image();
+        let cmp = setup_default_test_image();
+
+        let operation = ImgOp::FastBlur(10.0);
+
+        let operator = ImageEngine::new(img);
+        let done = operator.ignite(&[Instr::Operation(operation)]);
+        assert!(done.is_ok());
+
+        let result_img = done.unwrap();
+
+        assert_ne!(cmp.raw_pixels(), result_img.raw_pixels());
+
+        output_test_image_for_manual_inspection(&result_img, out_!("test_fast_blur.png"));
+    }
+
+    #[test]
+    fn test_fast_blur_sigma_not_positive() {
+        let img = setup_default_test_image();
+
+        let operator = ImageEngine::new(img);
+        let done = operator.ignite(&[Instr::Operation(ImgOp::FastBlur(0.0))]);
+
+        assert!(matches!(
+            done,
+            Err(SicImageEngineError::BlurSigmaNotPositive(sigma)) if sigma == 0.0
+        ));
     }
 
     #[test]

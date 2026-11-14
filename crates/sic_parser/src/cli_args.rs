@@ -59,6 +59,7 @@ mod tests {
         );
         assert!(operation("brighten", &["-1.0"]).is_err());
         assert!(operation("blur", &["A"]).is_err());
+        assert!(operation("fast-blur", &["A"]).is_err());
         assert!(operation("contrast", &[""]).is_err());
     }
 

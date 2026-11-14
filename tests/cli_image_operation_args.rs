@@ -71,6 +71,50 @@ mod blur {
 }
 
 #[cfg(test)]
+mod fast_blur {
+    use crate::common::*;
+
+    #[test]
+    fn fast_blur_1_dot_1() {
+        let mut process = SicTestCommandBuilder::new()
+            .input_from_resources(DEFAULT_IN)
+            .output_in_target("img_op_arg.png")
+            .with_args(["--fast-blur", "1.1"])
+            .spawn_child();
+
+        let result = process.wait();
+        assert!(result.is_ok());
+        assert!(result.unwrap().success());
+    }
+
+    #[test]
+    fn fast_blur_0() {
+        let mut process = SicTestCommandBuilder::new()
+            .input_from_resources(DEFAULT_IN)
+            .output_in_target("img_op_arg.png")
+            .with_args(["--fast-blur", "0"])
+            .spawn_child();
+
+        let result = process.wait();
+        assert!(result.is_ok());
+        assert_not!(result.unwrap().success());
+    }
+
+    #[test]
+    fn fast_blur_neg_1_dot_1() {
+        let mut process = SicTestCommandBuilder::new()
+            .input_from_resources(DEFAULT_IN)
+            .output_in_target("img_op_arg.png")
+            .with_args(["--fast-blur", "-1.1"])
+            .spawn_child();
+
+        let result = process.wait();
+        assert!(result.is_ok());
+        assert_not!(result.unwrap().success());
+    }
+}
+
+#[cfg(test)]
 mod crop {
     use super::*;
     use crate::common::*;

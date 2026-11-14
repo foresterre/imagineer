@@ -34,6 +34,7 @@ pub fn operation<A: Argument>(call: &Call<'_, A>) -> Result<ImgOp, ResolveError>
                 ImgOp::DrawText(DrawTextInner::new(text, (x, y), font_options))
             },
         ),
+        "fast-blur" => call.bind(["sigma"]).map(|(sigma,)| ImgOp::FastBlur(sigma)),
         "filter3x3" => call
             .bind([
                 "k11", "k12", "k13", "k21", "k22", "k23", "k31", "k32", "k33",
