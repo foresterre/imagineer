@@ -9,6 +9,8 @@ In the changelog below, you may find the notable changes to [imagineer](https://
 
 ## Unreleased
 
+## 0.25.0 - 2026-11-16
+
 ### Added
 
 - Added image operation `dither`, which reduces the image to black and white using Floyd-Steinberg error diffusion
