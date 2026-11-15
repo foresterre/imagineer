@@ -1,4 +1,4 @@
-dav1d_version := "1.5.0"
+dav1d_version := "1.5.4"
 dav1d_repo := "https://code.videolan.org/videolan/dav1d.git"
 dav1d_src := justfile_directory() / "target" / "dav1d-src"
 dav1d_prefix := justfile_directory() / "target" / "dav1d"
