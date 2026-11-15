@@ -39,11 +39,21 @@ pre-commit:
     just test
     just deny
 
-publish-workspace new_version:
-    cargo install cargo-publish-workspace
-    cargo publish-workspace --new-version {{ new_version }}
+bump-version new_version:
+    sed -i.bak -E \
+        -e '/^\[workspace\.package\]$/,/^\[/ s/^version = "[^"]*"/version = "{{ new_version }}"/' \
+        -e '/^\[workspace\.dependencies\]$/,/^\[/ s/^(sic_[a-z_]+ = [{] version = ")[^"]*"/\1{{ new_version }}"/' \
+        Cargo.toml
+    rm Cargo.toml.bak
+    cargo update --workspace
 
-# publish the workspace with a new workspace version, and package the result for the current platform
-publish new_version:
+publish-workspace new_version:
+    just bump-version {{ new_version }}
+    git commit --only -m "{{ new_version }}" -- Cargo.toml Cargo.lock
+    cargo publish --workspace
+    git tag v{{ new_version }}
+
+release new_version:
     just publish-workspace {{ new_version }}
-    just pack-release
+    git push origin main v{{ new_version }}
+    gh release create v{{ new_version }} --title {{ new_version }} --generate-notes

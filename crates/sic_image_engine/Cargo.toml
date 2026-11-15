@@ -1,6 +1,6 @@
 [package]
 name = "sic_image_engine"
-version = "0.23.0"
+version.workspace = true
 authors = ["Martijn Gribnau <garm@ilumeo.com>"]
 description = "Provides abstractions for the application of image operations of the 'imagineer' image cli project"
 license = "MIT OR Apache-2.0"

@@ -1,6 +1,6 @@
 [package]
 name = "sic_core"
-version = "0.23.0"
+version.workspace = true
 authors = ["Martijn Gribnau <garm@ilumeo.com>"]
 description = "Common types and re-exports for the 'imagineer' image cli project"
 license = "MIT OR Apache-2.0"

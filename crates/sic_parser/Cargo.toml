@@ -1,6 +1,6 @@
 [package]
 name = "sic_parser"
-version = "0.23.0"
+version.workspace = true
 authors = ["Martijn Gribnau <garm@ilumeo.com>"]
 description = "Parser for the image operation script used by the 'imagineer' image cli"
 license = "MIT OR Apache-2.0"

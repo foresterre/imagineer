@@ -1,6 +1,6 @@
 [package]
 name = "sic_io"
-version = "0.23.0"
+version.workspace = true
 authors = ["Martijn Gribnau <garm@ilumeo.com>"]
 description = "Common i/o operations and image format handling for the 'imagineer' image cli project"
 license = "MIT OR Apache-2.0"
