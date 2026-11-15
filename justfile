@@ -47,9 +47,15 @@ bump-version new_version:
     rm Cargo.toml.bak
     cargo update --workspace
 
+update-changelog new_version:
+    grep -q '^## Unreleased$' CHANGELOG.md || { echo "error: CHANGELOG.md has no '## Unreleased' header" >&2; exit 1; }
+    sed -i.bak -e '/^## Unreleased$/{p;s/.*//;p;s/.*/## {{ new_version }} - {{ datetime("%Y-%m-%d") }}/;}' CHANGELOG.md
+    rm CHANGELOG.md.bak
+
 publish-workspace new_version:
+    just update-changelog {{ new_version }}
     just bump-version {{ new_version }}
-    git commit --only -m "{{ new_version }}" -- Cargo.toml Cargo.lock
+    git commit --only -m "{{ new_version }}" -- Cargo.toml Cargo.lock CHANGELOG.md
     cargo publish --workspace
     git tag v{{ new_version }}
 
