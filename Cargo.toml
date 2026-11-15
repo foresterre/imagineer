@@ -69,18 +69,18 @@ members = [
 ]
 
 [workspace.package]
-version = "0.24.0"
+version = "0.25.0"
 edition = "2024"
 rust-version = "1.89"
 
 [workspace.dependencies]
 # internal crates
-sic_cli_ops = { version = "0.24.0", path = "crates/sic_cli_ops" }
-sic_core = { version = "0.24.0", path = "crates/sic_core" }
-sic_io = { version = "0.24.0", path = "crates/sic_io" }
-sic_image_engine = { version = "0.24.0", path = "crates/sic_image_engine" }
-sic_parser = { version = "0.24.0", path = "crates/sic_parser" }
-sic_testing = { version = "0.24.0", path = "crates/sic_testing" }
+sic_cli_ops = { version = "0.25.0", path = "crates/sic_cli_ops" }
+sic_core = { version = "0.25.0", path = "crates/sic_core" }
+sic_io = { version = "0.25.0", path = "crates/sic_io" }
+sic_image_engine = { version = "0.25.0", path = "crates/sic_image_engine" }
+sic_parser = { version = "0.25.0", path = "crates/sic_parser" }
+sic_testing = { version = "0.25.0", path = "crates/sic_testing" }
 
 # common dependencies
 strum = "0.28.0"

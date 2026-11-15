@@ -761,7 +761,7 @@ dependencies = [
 
 [[package]]
 name = "imagineer"
-version = "0.24.0"
+version = "0.25.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -1549,7 +1549,7 @@ checksum = "f8fadd59c855ef2080decdef8ff161eb6661b86933c9d82e5ba29dc602a55aba"
 
 [[package]]
 name = "sic_cli_ops"
-version = "0.24.0"
+version = "0.25.0"
 dependencies = [
  "parameterized",
  "sic_core",
@@ -1563,7 +1563,7 @@ dependencies = [
 
 [[package]]
 name = "sic_core"
-version = "0.24.0"
+version = "0.25.0"
 dependencies = [
  "ab_glyph",
  "color_quant",
@@ -1574,7 +1574,7 @@ dependencies = [
 
 [[package]]
 name = "sic_image_engine"
-version = "0.24.0"
+version = "0.25.0"
 dependencies = [
  "rayon",
  "sic_core",
@@ -1587,7 +1587,7 @@ dependencies = [
 
 [[package]]
 name = "sic_io"
-version = "0.24.0"
+version = "0.25.0"
 dependencies = [
  "parameterized",
  "sic_core",
@@ -1597,7 +1597,7 @@ dependencies = [
 
 [[package]]
 name = "sic_parser"
-version = "0.24.0"
+version = "0.25.0"
 dependencies = [
  "parameterized",
  "sic_core",
@@ -1609,7 +1609,7 @@ dependencies = [
 
 [[package]]
 name = "sic_testing"
-version = "0.24.0"
+version = "0.25.0"
 dependencies = [
  "parameterized",
  "sic_core",
