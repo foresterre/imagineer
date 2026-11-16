@@ -9,6 +9,10 @@ In the changelog below, you may find the notable changes to [imagineer](https://
 
 ## Unreleased
 
+### Fixed
+
+- Fixed release binaries build actions
+
 ## 0.25.0 - 2026-11-16
 
 ### Added

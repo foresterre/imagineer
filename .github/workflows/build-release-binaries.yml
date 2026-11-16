@@ -14,7 +14,7 @@ jobs:
             os: ubuntu-latest
             archive_ext: tgz
 
-          - target: x86_64-apple-darwin
+          - target: aarch64-apple-darwin
             os: macos-latest
             archive_ext: tgz
 
@@ -60,16 +60,14 @@ jobs:
         uses: ./.github/actions/setup-dav1d
 
       - name: build_${{ matrix.target }}_release_binary
-        shell: bash
         run: cargo build --target=${{ matrix.target }} --release --features avif-decoder
 
       - name: install_cargo_about
-        shell: bash
-        run: cargo install cargo-about
+        run: cargo install --locked --features cli cargo-about@0.9.3
 
       - name: generate_dep_licenses_file
         shell: bash
-        run: cargo about generate --output-file "${{ steps.set_output.outputs.subfolder }}/third-party-licenses.html" about.hbs
+        run: cargo about generate --features avif-decoder --output-file "${{ steps.set_output.outputs.subfolder }}/third-party-licenses.html" about.hbs
 
       - name: pack_archive_macos
         if: matrix.os == 'macos-latest'
