@@ -9,6 +9,10 @@ In the changelog below, you may find the notable changes to [imagineer](https://
 
 ## Unreleased
 
+### Added
+
+- Added image operation `thumbnail`, a faster way to make images smaller, which follows `preserve-aspect-ratio`
+
 ## 0.25.1 - 2026-11-16
 
 ### Fixed
@@ -26,7 +30,6 @@ In the changelog below, you may find the notable changes to [imagineer](https://
 - Added image operation `fast-blur`, which performs a faster, approximate Gaussian blur
 - Added image operation `sharpen`, which sharpens the image with a 3x3 sharpen filter
 - Added image operation `equalize-histogram`, which spreads the brightness of a grayscale version of the image over the full range
-- Added image operation `thumbnail`, a faster way to make images smaller, which follows `preserve-aspect-ratio`
 - Added dav1d based Avif decoder as optional feature (enabled for our own builds)
 
 ### Notable dependency updates
