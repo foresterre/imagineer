@@ -42,6 +42,7 @@ pub enum ImgOp {
     Rotate270,
     Sharpen,
     Threshold,
+    Thumbnail((u32, u32)),
     Unsharpen((f32, i32)),
     VerticalGradient(GradientInput),
 }

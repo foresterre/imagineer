@@ -69,6 +69,7 @@ pub fn operation<A: Argument>(call: &Call<'_, A>) -> Result<ImgOp, ResolveError>
         "rotate270" => call.bind([]).map(|()| ImgOp::Rotate270),
         "sharpen" => call.bind([]).map(|()| ImgOp::Sharpen),
         "threshold" => call.bind([]).map(|()| ImgOp::Threshold),
+        "thumbnail" => call.bind(["width", "height"]).map(ImgOp::Thumbnail),
         "unsharpen" => call.bind(["sigma", "threshold"]).map(ImgOp::Unsharpen),
         "vertical-gradient" => call.bind(["from", "to"]).map(|(Color(from), Color(to))| {
             ImgOp::VerticalGradient(GradientInput::new((from, to)))

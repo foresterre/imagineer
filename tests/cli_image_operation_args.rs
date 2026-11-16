@@ -426,6 +426,51 @@ mod overlay {
 }
 
 #[cfg(test)]
+mod thumbnail {
+    use crate::common::*;
+    use sic_core::image;
+
+    fn run_thumbnail(output: &str, args: &[&str]) -> Option<(u32, u32)> {
+        let mut process = SicTestCommandBuilder::new()
+            .input_from_resources(DEFAULT_IN)
+            .output_in_target(output)
+            .with_args(args)
+            .spawn_child();
+
+        let status = process.wait().unwrap();
+
+        status
+            .success()
+            .then(|| image::image_dimensions(setup_output_path(output)).unwrap())
+    }
+
+    #[test]
+    fn thumbnail_exact() {
+        let dimensions = run_thumbnail("cio_thumbnail_exact.png", &["--thumbnail", "4", "4"]);
+
+        assert_eq!(dimensions, Some((4, 4)));
+    }
+
+    #[test]
+    fn thumbnail_preserve_aspect_ratio() {
+        let dimensions = run_thumbnail(
+            "cio_thumbnail_preserve.png",
+            &["--preserve-aspect-ratio", "true", "--thumbnail", "4", "4"],
+        );
+
+        // 8x6 fits 4x4 at half size
+        assert_eq!(dimensions, Some((4, 3)));
+    }
+
+    #[test]
+    fn thumbnail_not() {
+        let dimensions = run_thumbnail("cio_thumbnail_not.png", &["--thumbnail", "4"]);
+
+        assert_eq!(dimensions, None);
+    }
+}
+
+#[cfg(test)]
 mod resize {
     use super::*;
     use crate::common::*;

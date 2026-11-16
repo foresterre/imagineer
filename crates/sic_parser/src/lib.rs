@@ -119,6 +119,9 @@ mod tests {
             "hue-rotate -3579;",
             "invert;",
             "resize 99 88;",
+            "thumbnail 99 88;",
+            "THUMBNAIL 1 1",
+            "set preserve-aspect-ratio true; thumbnail 50 60",
             "rotate90;",
             "rotate180;",
             "rotate270;",
@@ -180,6 +183,9 @@ mod tests {
             vec![op(ImgOp::HueRotate(-3579))],
             vec![op(ImgOp::Invert)],
             vec![op(ImgOp::Resize((99, 88)))],
+            vec![op(ImgOp::Thumbnail((99, 88)))],
+            vec![op(ImgOp::Thumbnail((1, 1)))],
+            vec![Instr::EnvAdd(EnvItem::PreserveAspectRatio(true)), op(ImgOp::Thumbnail((50, 60)))],
             vec![op(ImgOp::Rotate90)],
             vec![op(ImgOp::Rotate180)],
             vec![op(ImgOp::Rotate270)],
@@ -236,6 +242,9 @@ mod tests {
             "flip-horizontal 1",
             "unsharpen -99.0 -88.0;",
             "resize 100",
+            "thumbnail 100",
+            "thumbnail -1 10",
+            "thumbnail 1.5 10",
         }
     )]
     fn rejects(input: &str) {

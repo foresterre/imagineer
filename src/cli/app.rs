@@ -331,6 +331,12 @@ pub fn create_app(version: &'static str, about: &'static str, help_ops: &'static
             .action(ArgAction::Append)
             .value_names(["x", "y"])
             .num_args(2))
+        .arg(Arg::new(OperationId::Thumbnail.as_str())
+            .help("Operation: quickly scale the input image to x by y pixels, meant for making smaller images")
+            .long(OperationId::Thumbnail.as_str())
+            .action(ArgAction::Append)
+            .value_names(["x", "y"])
+            .num_args(2))
         .arg(Arg::new(OperationId::Rotate90.as_str())
             .help("Operation: rotate the input image by 90 degrees")
             .long(OperationId::Rotate90.as_str())
@@ -365,7 +371,7 @@ pub fn create_app(version: &'static str, about: &'static str, help_ops: &'static
 
         // image-operations(cli-arguments/modifiers):
         .arg(Arg::new(OperationId::PreserveAspectRatio.as_str())
-            .help("Operation modifier for 'resize': preserve the aspect ratio of the original input image")
+            .help("Operation modifier for 'resize' and 'thumbnail': preserve the aspect ratio of the original input image")
             .long(OperationId::PreserveAspectRatio.as_str())
             .action(ArgAction::Append)
             .value_name("bool")

@@ -67,6 +67,7 @@ The available image operation modifiers are:
 |===================|===========================================|
 | resize            | preserve-aspect-ratio <bool>              |
 | resize            | sampling-filter <filter>                  |
+| thumbnail         | preserve-aspect-ratio <bool>              |
 -----------------------------------------------------------------
 
 

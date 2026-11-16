@@ -36,6 +36,7 @@ pub enum OperationId {
     Rotate270,
     Sharpen,
     Threshold,
+    Thumbnail,
     Unsharpen,
     VerticalGradient,
 
@@ -96,6 +97,7 @@ impl OperationId {
             OperationId::Rotate270 => 0,
             OperationId::Sharpen => 0,
             OperationId::Threshold => 0,
+            OperationId::Thumbnail => 2,
             OperationId::Unsharpen => 2,
             OperationId::VerticalGradient => 2,
 

@@ -183,6 +183,11 @@ impl ImageEngine {
             ImgOp::Threshold => {
                 operations::threshold::Threshold::new().apply_operation(&mut self.image)
             }
+            ImgOp::Thumbnail((width, height)) => {
+                let aspect_ratio = should_preserve_aspect_ratio(&self.environment);
+                operations::thumbnail::Thumbnail::new(*width, *height, aspect_ratio)
+                    .apply_operation(&mut self.image)
+            }
             ImgOp::Unsharpen((sigma, threshold)) => {
                 operations::unsharpen::Unsharpen::new(*sigma, *threshold)
                     .apply_operation(&mut self.image)
@@ -503,6 +508,65 @@ mod tests {
             &right,
             out_!("test_resize_preserve_aspect_ratio_right_default_f.png"),
         );
+    }
+
+    #[test]
+    fn thumbnail_with_preserve_aspect_ratio() {
+        // W 217 H 447
+        let img = setup_default_test_image();
+
+        let engine = ImageEngine::new(img);
+        let done = engine.ignite(&[
+            Instr::EnvAdd(EnvItem::PreserveAspectRatio(true)),
+            Instr::Operation(ImgOp::Thumbnail((100, 100))),
+        ]);
+
+        let out = done.unwrap();
+
+        // 447 > 217 -> |_ 217px/447px*100px _| = 49px
+        assert_eq!((49, 100), out.dimensions());
+
+        output_test_image_for_manual_inspection(
+            &out,
+            out_!("test_thumbnail_preserve_aspect_ratio.png"),
+        );
+    }
+
+    #[test]
+    fn thumbnail_with_preserve_aspect_ratio_set_to_false() {
+        // W 217 H 447
+        let img = setup_default_test_image();
+
+        let engine = ImageEngine::new(img);
+        let engine2 = engine.clone();
+        let cmp_left = engine.ignite(&[
+            Instr::EnvAdd(EnvItem::PreserveAspectRatio(false)),
+            Instr::Operation(ImgOp::Thumbnail((100, 100))),
+        ]);
+        let cmp_right = engine2.ignite(&[Instr::Operation(ImgOp::Thumbnail((100, 100)))]);
+
+        let left = cmp_left.unwrap();
+        let right = cmp_right.unwrap();
+
+        assert_eq!(left.raw_pixels(), right.raw_pixels());
+        assert_eq!((100, 100), left.dimensions());
+
+        output_test_image_for_manual_inspection(&left, out_!("test_thumbnail_exact.png"));
+    }
+
+    #[test]
+    fn thumbnail_with_preserve_aspect_ratio_removed() {
+        // W 217 H 447
+        let img = setup_default_test_image();
+
+        let engine = ImageEngine::new(img);
+        let done = engine.ignite(&[
+            Instr::EnvAdd(EnvItem::PreserveAspectRatio(true)),
+            Instr::EnvRemove(ItemName::PreserveAspectRatio),
+            Instr::Operation(ImgOp::Thumbnail((100, 100))),
+        ]);
+
+        assert_eq!((100, 100), done.unwrap().dimensions());
     }
 
     #[test]
